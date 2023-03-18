@@ -19,5 +19,7 @@ namespace CentroAutomotivo.Models
         [Required(ErrorMessage = "Informe a Cor (Hexadecimal)")]
         [StringLength(7, MinimumLength = 7)]
         public string Cor { get; set; }
+
+        public ICollection<OrdemServico> OrdensServico { get; set; }
     }
 }
