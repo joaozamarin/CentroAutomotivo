@@ -23,6 +23,8 @@ namespace CentroAutomotivo.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             #region N : N - ServicoOrdem
             builder.Entity<ServicoOrdem>()
                 .HasKey(so => new { so.OrdemServicoId, so.ServicoId });
