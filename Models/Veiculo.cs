@@ -30,9 +30,9 @@ namespace CentroAutomotivo.Models
 
         [Display(Name = "Proprietário")]
         [Required]
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public string AppUserId { get; set; }
+        [ForeignKey("AppUserId")]
+        public AppUser AppUser { get; set; }
 
         public ICollection<OrdemServico> OrdensServico { get; set; }
     }

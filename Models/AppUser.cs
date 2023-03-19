@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CentroAutomotivo.Models
 {
-    public class User : IdentityUser
+    public class AppUser : IdentityUser
     {
         [Required]
         [StringLength(60)]
