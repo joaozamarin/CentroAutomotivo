@@ -24,5 +24,7 @@ namespace CentroAutomotivo.Models
         [Required(ErrorMessage = "Informe o Preço")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal Preco { get; set; }
+
+        public ICollection<PecaOrdem> PecasOrdem { get; set; }
     }
 }

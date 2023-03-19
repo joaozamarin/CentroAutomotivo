@@ -32,5 +32,8 @@ namespace CentroAutomotivo.Models
         public int VeiculoId { get; set; }
         [ForeignKey("VeiculoId")]
         public Veiculo Veiculo { get; set; }
+
+        public ICollection<ServicoOrdem> ServicosOrdem { get; set; }
+        public ICollection<PecaOrdem> PecasOrdem { get; set; }
     }
 }
