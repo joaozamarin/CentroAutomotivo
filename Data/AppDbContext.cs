@@ -20,5 +20,38 @@ namespace CentroAutomotivo.Data
         public DbSet<OrdemServico> OrdensServico { get; set; }
         public DbSet<ServicoOrdem> ServicosOrdem { get; set; }
         public DbSet<PecaOrdem> PecasOrdem { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            #region N : N - ServicoOrdem
+            builder.Entity<ServicoOrdem>()
+                .HasKey(so => new { so.OrdemServicoId, so.ServicoId });
+
+            builder.Entity<ServicoOrdem>()
+                .HasOne(so => so.OrdemServico)
+                .WithMany(so => so.ServicosOrdem)
+                .HasForeignKey(so => so.OrdemServicoId);
+            
+            builder.Entity<ServicoOrdem>()
+                .HasOne(so => so.Servico)
+                .WithMany(so => so.ServicosOrdem)
+                .HasForeignKey(so => so.ServicoId);
+            #endregion
+
+            #region N : N - PecaOrdem
+            builder.Entity<PecaOrdem>()
+                .HasKey(po => new { po.OrdemServicoId, po.PecaId });
+            
+            builder.Entity<PecaOrdem>()
+                .HasOne(po => po.OrdemServico)
+                .WithMany(po => po.PecasOrdem)
+                .HasForeignKey(po => po.OrdemServicoId);
+            
+            builder.Entity<PecaOrdem>()
+                .HasOne(po => po.Peca)
+                .WithMany(po => po.PecasOrdem)
+                .HasForeignKey(po => po.PecaId);
+            #endregion
+        }
     }
 }
