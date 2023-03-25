@@ -16,13 +16,13 @@ namespace CentroAutomotivo.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.14")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("CentroAutomotivo.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -32,15 +32,15 @@ namespace CentroAutomotivo.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("FotoPerfil")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(400)
+                        .HasColumnType("varchar(400)");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("tinyint(1)");
@@ -57,12 +57,12 @@ namespace CentroAutomotivo.Migrations
                         .HasColumnType("varchar(60)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
@@ -80,8 +80,8 @@ namespace CentroAutomotivo.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
@@ -270,11 +270,11 @@ namespace CentroAutomotivo.Migrations
 
                     b.Property<string>("AppUserId")
                         .IsRequired()
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Imagem")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(400)
+                        .HasColumnType("varchar(400)");
 
                     b.Property<int>("ModeloId")
                         .HasColumnType("int");
@@ -301,19 +301,19 @@ namespace CentroAutomotivo.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
@@ -338,7 +338,7 @@ namespace CentroAutomotivo.Migrations
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -361,7 +361,7 @@ namespace CentroAutomotivo.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -373,17 +373,17 @@ namespace CentroAutomotivo.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -395,10 +395,10 @@ namespace CentroAutomotivo.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -410,13 +410,13 @@ namespace CentroAutomotivo.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Value")
                         .HasColumnType("longtext");
