@@ -1,18 +1,15 @@
-html {
-  font-size: 14px;
+.avatar {
+    position: relative;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.avatar-50 {
+    height: 50px;
+    width: 50px;
+    min-width: 50px;
+    border-radius: 0.25rem;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
+.avatar-rounded {
+    border-radius: 50rem;
+    overflow: hidden;
 }
