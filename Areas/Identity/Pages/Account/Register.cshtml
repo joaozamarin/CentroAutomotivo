@@ -1,8 +1,8 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
-    Layout = null;
+  ViewData["Title"] = "Register";
+  Layout = null;
 }
 
 <!DOCTYPE html>
@@ -17,7 +17,8 @@
     @ViewData["Title"] | JAVA Centro Automotivo
   </title>
   <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
   <link href="~/dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="~/dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -41,9 +42,11 @@
       <div class="page-header min-vh-100">
         <div class="container">
           <div class="row">
-            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
-              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" 
-              style="background-image: url('../../assets/img/registre-se/mecanico-de-automoveis-sorridente-com-as-maos-em-pe-de-chave-dobradas-sobre-fundo-branco.jpg'); background-size: cover;">
+            <div
+              class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
+              <div
+                class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
+                style="background-image: url('../../assets/img/registre-se/mecanico-de-automoveis-sorridente-com-as-maos-em-pe-de-chave-dobradas-sobre-fundo-branco.jpg'); background-size: cover;">
               </div>
             </div>
             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
@@ -53,28 +56,39 @@
                   <p class="mb-0">Digite seu Nome, e-mail e senha para se cadastrar</p>
                 </div>
                 <div class="card-body">
-                  <form role="form">
+                  <form role="form" class="text-start" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Nome</label>
-                      <input type="text" class="form-control">
+                      <label class="form-label" asp-for="Input.Nome"></label>
+                      <input class="form-control" asp-for="Input.Nome">
+                      <span class="col-12 text-danger text-xs pt-1" asp-validation-for="Input.Nome"></span>
                     </div>
                     <div class="input-group input-group-outline mb-3 ">
-                      <label class="form-label">Email</label>
-                      <input type="email" class="form-control">
+                      <label class="form-label" asp-for="Input.Email"></label>
+                      <input class="form-control" asp-for="Input.Email">
+                      <span class="col-12 text-danger text-xs pt-1" asp-validation-for="Input.Email"></span>
                     </div>
                     <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Senha</label>
-                      <input type="password" class="form-control">
+                      <label class="form-label" asp-for="Input.Password"></label>
+                      <input class="form-control" asp-for="Input.Password">
+                      <span class="col-12 text-danger text-xs pt-1" asp-validation-for="Input.Password"></span>
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                      <label class="form-label" asp-for="Input.ConfirmPassword"></label>
+                      <input class="form-control" asp-for="Input.ConfirmPassword">
+                      <span class="col-12 text-danger text-xs pt-1" asp-validation-for="Input.ConfirmPassword"></span>
                     </div>
                     <div class="text-center">
-                      <button type="button" class="btn btn-lg bg-gradient-info btn-lg w-100 mt-4 mb-0">inscrever-se</button>
+                      <button type="submit"
+                        class="btn btn-lg bg-gradient-info btn-lg w-100 mt-4 mb-0">inscrever-se</button>
                     </div>
                   </form>
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-2 text-sm mx-auto">
                     já tem uma conta?
-                    <a class="text-info text-gradient font-weight-bold" asp-area="Identity" asp-page="/Account/Login">Entrar</a>
+                    <a class="text-info text-gradient font-weight-bold" asp-area="Identity"
+                      asp-page="/Account/Login">Entrar</a>
                   </p>
                 </div>
               </div>
@@ -105,7 +119,7 @@
 </body>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+  <partial name="_ValidationScriptsPartial" />
 }
 
 ]
@@ -150,30 +164,30 @@
         <section>
             <h3>Use another service to register.</h3>
             <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
+@{
+  if ((Model.ExternalLogins?.Count ?? 0) == 0)
+  {
+    <div>
+                                        <p>
+                                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                                            about setting up this ASP.NET application to support logging in via external services</a>.
+                                        </p>
+    </div>
+  }
+  else
+  {
+    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                        <div>
+                                            <p>
+          @foreach (var provider in Model.ExternalLogins)
+          {
+                                                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+          }
+                                            </p>
+                                        </div>
+    </form>
+  }
+}
         </section>
     </div>
 </div>

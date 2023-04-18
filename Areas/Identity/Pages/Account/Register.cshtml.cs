@@ -71,15 +71,15 @@ namespace CentroAutomotivo.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            [Required]
+            [Required (ErrorMessage = "Digite seu Nome")]
             [Display(Name = "Nome")]
             public string Nome { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required( ErrorMessage = "Informe seu E-mail")]
+            [EmailAddress( ErrorMessage ="Informe um E-mail válido")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
@@ -87,10 +87,10 @@ namespace CentroAutomotivo.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required ( ErrorMessage = "Informe sua Senha")]
+            [StringLength(100, ErrorMessage = "senha com no minimo 6 caracteres pelo menos uma letra maiuscula e pelo menos um caracter", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Senha")]
             public string Password { get; set; }
 
             /// <summary>
@@ -98,8 +98,8 @@ namespace CentroAutomotivo.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirme sua Senha")]
+            [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não são iguais")]
             public string ConfirmPassword { get; set; }
         }
 
