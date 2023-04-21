@@ -71,7 +71,7 @@ namespace CentroAutomotivo.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            [Required (ErrorMessage = "Digite seu Nome")]
+            [Required (ErrorMessage = "Informe seu Nome")]
             [Display(Name = "Nome")]
             public string Nome { get; set; }
             /// <summary>
@@ -88,7 +88,7 @@ namespace CentroAutomotivo.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required ( ErrorMessage = "Informe sua Senha")]
-            [StringLength(100, ErrorMessage = "senha com no minimo 6 caracteres pelo menos uma letra maiuscula e pelo menos um caracter", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "A senha deve possuir, no mínimo, 6 caracteres", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
             public string Password { get; set; }
@@ -99,7 +99,7 @@ namespace CentroAutomotivo.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirme sua Senha")]
-            [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não são iguais")]
+            [Compare("Password", ErrorMessage = "Senhas não conferem")]
             public string ConfirmPassword { get; set; }
         }
 

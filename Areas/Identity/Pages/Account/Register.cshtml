@@ -1,12 +1,12 @@
 ﻿@page
 @model RegisterModel
 @{
-  ViewData["Title"] = "Register";
+  ViewData["Title"] = "Cadastrar";
   Layout = null;
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="utf-8" />
@@ -16,7 +16,7 @@
   <title>
     @ViewData["Title"] | JAVA Centro Automotivo
   </title>
-  <!--     Fonts and icons     -->
+  <!-- Fonts and icons -->
   <link rel="stylesheet" type="text/css"
     href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
@@ -31,12 +31,6 @@
 </head>
 
 <body class="">
-  <div class="container position-sticky z-index-sticky top-0">
-    <div class="row">
-      <div class="col-12">
-      </div>
-    </div>
-  </div>
   <main class="main-content  mt-0">
     <section>
       <div class="page-header min-vh-100">
@@ -46,14 +40,14 @@
               class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
               <div
                 class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
-                style="background-image: url('../../assets/img/registre-se/mecanico-de-automoveis-sorridente-com-as-maos-em-pe-de-chave-dobradas-sobre-fundo-branco.jpg'); background-size: cover;">
+                style="background-image: url('../../dashboard/assets/img/fundo-registro.png'); background-size: cover;">
               </div>
             </div>
             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
               <div class="card card-plain">
                 <div class="card-header">
-                  <h4 class="font-weight-bolder">Inscrever-se</h4>
-                  <p class="mb-0">Digite seu Nome, e-mail e senha para se cadastrar</p>
+                  <h4 class="font-weight-bolder">Cadastre-se</h4>
+                  <p class="mb-0">Insira as informações abaixo para cadastrar</p>
                 </div>
                 <div class="card-body">
                   <form role="form" class="text-start" method="post">
@@ -63,7 +57,7 @@
                       <input class="form-control" asp-for="Input.Nome">
                       <span class="col-12 text-danger text-xs pt-1" asp-validation-for="Input.Nome"></span>
                     </div>
-                    <div class="input-group input-group-outline mb-3 ">
+                    <div class="input-group input-group-outline mb-3">
                       <label class="form-label" asp-for="Input.Email"></label>
                       <input class="form-control" asp-for="Input.Email">
                       <span class="col-12 text-danger text-xs pt-1" asp-validation-for="Input.Email"></span>
@@ -80,15 +74,15 @@
                     </div>
                     <div class="text-center">
                       <button type="submit"
-                        class="btn btn-lg bg-gradient-info btn-lg w-100 mt-4 mb-0">inscrever-se</button>
+                        class="btn btn-lg bg-gradient-info btn-lg w-100 mt-4 mb-0">Cadastrar</button>
                     </div>
                   </form>
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-2 text-sm mx-auto">
-                    já tem uma conta?
-                    <a class="text-info text-gradient font-weight-bold" asp-area="Identity"
-                      asp-page="/Account/Login">Entrar</a>
+                    Já possui uma conta?
+                    <a asp-area="Identity" asp-page="/Account/Login"
+                      class="text-primary text-info font-weight-bold">Entrar</a>
                   </p>
                 </div>
               </div>
@@ -98,7 +92,7 @@
       </div>
     </section>
   </main>
-  <!--   Core JS Files   -->
+
   <script src="~/dashboard/assets/js/core/popper.min.js"></script>
   <script src="~/dashboard/assets/js/core/bootstrap.min.js"></script>
   <script src="~/dashboard/assets/js/plugins/perfect-scrollbar.min.js"></script>
@@ -112,84 +106,13 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
-  <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="~/dashboard/assets/js/material-dashboard.min.js?v=3.0.0"></script>
+  <script src="~/dashboard/assets/js/material-dashboard.min.js?v=3.0.5"></script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816"
+    integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
+    data-cf-beacon='{"rayId":"7bb8e53f5cbc00ee","version":"2023.3.0","r":1,"token":"1b7cbb72744b40c580f8633c6b62637e","si":100}'
+    crossorigin="anonymous"></script>
+  <partial name="_ValidationScriptsPartial" />
 </body>
 
-@section Scripts {
-  <partial name="_ValidationScriptsPartial" />
-}
-
-]
-
-
-
-<!-- codigo antigo da pagina -->
-
-<!-- 
-<h1>@ViewData["Title"]</h1>
-
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Input.Nome" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="Input.Nome"></label>
-                <span asp-validation-for="Input.Nome" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="Input.Email"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.Password"></label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.ConfirmPassword"></label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-@{
-  if ((Model.ExternalLogins?.Count ?? 0) == 0)
-  {
-    <div>
-                                        <p>
-                                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                                            about setting up this ASP.NET application to support logging in via external services</a>.
-                                        </p>
-    </div>
-  }
-  else
-  {
-    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                                        <div>
-                                            <p>
-          @foreach (var provider in Model.ExternalLogins)
-          {
-                                                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-          }
-                                            </p>
-                                        </div>
-    </form>
-  }
-}
-        </section>
-    </div>
-</div>
-
--->
+</html>
