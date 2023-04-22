@@ -123,11 +123,11 @@ namespace CentroAutomotivo.Areas.Identity.Pages.Account
 
                     if (usuario.IsAdmin)
                     {
-                        returnUrl = Url.Content("~/admin");
+                        returnUrl = Url.Content("~/Admin");
                     }
                     else
                     {
-                        returnUrl = Url.Content("~/cliente");
+                        returnUrl = Url.Content("~/Cliente");
                     }
 
                     _logger.LogInformation("User logged in.");
