@@ -44,10 +44,10 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header d-flex align-items-center">
+  <header id="header" class="headerCliente d-flex align-items-center bg-dark">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-      <a asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center">
+      <a asp-controller="Cliente" asp-action="Index" class="logo d-flex align-items-center" style="z-index: 100000;">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <img src="~/assets/img/logo.png" alt="">
         <h1>Centro Automotivo.</h1>
@@ -57,11 +57,6 @@
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a asp-controller="Home" asp-action="Index" class="active">Home</a></li>
-          <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#servico">Serviços</a></li>
-          <li><a href="#marca">Marcas</a></li>
-          <li><a href="#contato">Contato</a></li>
           <partial name="_LoginPartial"></partial>
         </ul>
       </nav><!-- .navbar -->
@@ -69,90 +64,12 @@
     </div>
   </header><!-- End Header -->
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="hero">
-
-    <div class="info d-flex align-items-center">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6 text-center">
-            <h2 data-aos="fade-down">Bem vindo a <br><span>JAVA Centro Automotivo</span></h2>
-            <p data-aos="fade-up">Consulte nossos serviços e agende uma revisão para seu veículo!</p>
-            <a data-aos="fade-up" data-aos-delay="200" href="#servico" class="btn-get-started">Ver Serviços</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-
-      <div class="carousel-item active"
-        style="background-image: url(assets/img/hero-carousel/pexels-vlad-alexandru-popa-1402787.jpg)">
-      </div>
-      <div class="carousel-item"
-        style="background-image: url(assets/img/hero-carousel/pexels-abdulwahab-alawadhi-3422964.jpg)"></div>
-      <div class="carousel-item"
-        style="background-image: url(assets/img/hero-carousel/pexels-garvin-st-villier-3311574.jpg)"></div>
-      <div class="carousel-item" style="background-image: url(assets/img/hero-carousel/pexels-jay-pizzle-3752194.jpg)">
-      </div>
-
-    </div>
-
-  </section><!-- End Hero Section -->
-
-  <main id="main">
+  <main id="main" class="container my-4">
     @RenderBody()
   </main>
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer bg-dark">
-
-    <div class="footer-content position-relative">
-      <div class="container">
-        <div class="row justify-content-between">
-
-          <div class="col-lg-4 col-md-6">
-            <div class="footer-info">
-              <h3>Centro Automotivo</h3>
-              <p>
-                Centro, 123 <br>
-                Barra Bonita, SP<br><br>
-                <strong>Telefone:</strong> (14) 998123-4456<br>
-                <strong>Email:</strong> javacentroautomotivo@gmail.com<br>
-              </p>
-              <div class="social-links d-flex mt-3">
-                <a href="#" class="d-flex align-items-center justify-content-center"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="d-flex align-items-center justify-content-center"><i class="bi bi-instagram"></i></a>
-              </div>
-            </div>
-          </div><!-- End footer info column-->
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Links</h4>
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#sobre">Sobre nós</a></li>
-              <li><a href="#servico">Serviços</a></li>
-              <li><a href="#marca">Marcas</a></li>
-              <li><a href="#">Política de privacidade</a></li>
-            </ul>
-          </div><!-- End footer links column-->
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Nossos Serviços</h4>
-            <ul>
-              <li><a href="#">Mecânica Geral</a></li>
-              <li><a href="#">Elétrica</a></li>
-              <li><a href="#">Funilaria</a></li>
-              <li><a href="#">Ar Condicionado</a></li>
-              <li><a href="#">Revisão</a></li>
-            </ul>
-          </div><!-- End footer links column-->
-
-        </div>
-      </div>
-    </div>
 
     <div class="footer-legal text-center position-relative">
       <div class="container">

@@ -281,6 +281,40 @@ section {
   color: var(--color-primary);
 }
 
+.headerCliente {
+  z-index: 997;
+  background: url("../img/hero-carousel/pexels-jay-pizzle-3752194.jpg") top center no-repeat;
+  position: relative;
+  padding: 30px 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headerCliente:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  inset: 0;
+}
+
+.headerCliente .logo img {
+  max-height: 60px;
+  margin-right: 6px;
+}
+
+.headerCliente .logo h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0;
+  font-family: var(--font-primary);
+}
+
+.headerCliente .logo h1 span {
+  color: var(--color-primary);
+}
+
 /*--------------------------------------------------------------
 # Desktop Navigation
 --------------------------------------------------------------*/
@@ -2580,7 +2614,7 @@ section {
 --------------------------------------------------------------*/
 .footer {
   color: #fff;
-  background: url("../img/footer-bg.jpg") top center no-repeat;
+  background: url("../img/hero-carousel/pexels-jay-pizzle-4756886.jpg") top center no-repeat;
   background-size: cover;
   font-size: 14px;
   padding: 80px 0 60px 0;
