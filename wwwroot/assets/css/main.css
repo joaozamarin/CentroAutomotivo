@@ -2617,11 +2617,27 @@ section {
   background: url("../img/hero-carousel/pexels-jay-pizzle-4756886.jpg") top center no-repeat;
   background-size: cover;
   font-size: 14px;
+  padding: 80px 0px 60px 0px;
+  position: relative;
+}
+
+.footer2 {
+  color: #fff;
+  background: url("../img/hero-carousel/pexels-jay-pizzle-4756886.jpg") top center no-repeat;
+  background-size: cover;
+  font-size: 14px;
   padding: 0px 0px 10px 0px;
   position: relative;
 }
 
 .footer:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  inset: 0;
+}
+
+.footer2:before {
   content: "";
   background: rgba(0, 0, 0, 0.8);
   position: absolute;
