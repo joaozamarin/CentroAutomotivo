@@ -13,3 +13,7 @@
     border-radius: 50rem;
     overflow: hidden;
 }
+
+td, th{
+    font-size: 18px;
+}

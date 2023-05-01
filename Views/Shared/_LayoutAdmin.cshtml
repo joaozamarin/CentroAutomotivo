@@ -13,8 +13,8 @@
   <meta name="author" content="" />
   <title>@ViewData["Title"] - JAVA Centro Automotivo</title>
   <!-- loader-->
-  <link href="~/admin/assets/css/pace.min.css" rel="stylesheet" />
-  <script src="~/admin/assets/js/pace.min.js"></script>
+  @* <link href="~/admin/assets/css/pace.min.css" rel="stylesheet" />
+  <script src="~/admin/assets/js/pace.min.js"></script> *@
   <!--favicon-->
   <link rel="icon" href="~/admin/assets/images/favicon.ico" type="image/x-icon">
   <!-- Vector CSS -->
@@ -35,10 +35,12 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link href="~/css/site.css" rel="stylesheet">
+  @await RenderSectionAsync("Styles", required: false)
 
 </head>
 
-<body class="bg-theme bg-theme1">
+<body class="bg-theme bg-theme9">
 
   <!-- Start wrapper-->
   <div id="wrapper">
@@ -89,7 +91,7 @@
         </li>
 
         <li class="@(ViewBag.Title == "Peças" ? "active" : "")">
-          <a href="calendar.html" style="display: flex; justify-content: start; align-items: center;">
+          <a asp-controller="Peca" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
             <span class="material-icons mr-2">
               build
             </span> <span>Peças</span>
@@ -263,7 +265,7 @@
   <!-- sidebar-menu js -->
   <script src="~/admin/assets/js/sidebar-menu.js"></script>
   <!-- loader scripts -->
-  <script src="~/admin/assets/js/jquery.loading-indicator.js"></script>
+  @* <script src="~/admin/assets/js/jquery.loading-indicator.js"></script> *@
   <!-- Custom scripts -->
   <script src="~/admin/assets/js/app-script.js"></script>
   <!-- Chart js -->
@@ -272,7 +274,8 @@
 
   <!-- Index js -->
   <script src="~/admin/assets/js/index.js"></script>
-
+  <script src="~/js/site.js"></script>
+  @await RenderSectionAsync("Scripts", required: false)
 
 </body>
 
