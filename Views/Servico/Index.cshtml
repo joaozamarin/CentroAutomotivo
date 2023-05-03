@@ -1,11 +1,11 @@
-@model IEnumerable<CentroAutomotivo.Models.Marca>
+@model IEnumerable<CentroAutomotivo.Models.Servico>
 
 @{
-    ViewData["Title"] = "Marcas";
+    ViewData["Title"] = "Serviços";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Marcas</h1>
+<h1>Serviços</h1>
 <p>
     <a class="btn btn-success mt-3" asp-action="Create">Adicionar</a>
 </p>
@@ -14,6 +14,9 @@
         <tr>
             <th class="w-70">
                 @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th class="w-70">
+                @Html.DisplayNameFor(model => model.Preco)
             </th>
             <th class="w-30">Ações</th>
         </tr>
@@ -24,6 +27,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" title="Alterar" class="text-secondary">

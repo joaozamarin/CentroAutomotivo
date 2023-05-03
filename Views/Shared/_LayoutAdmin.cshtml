@@ -82,7 +82,8 @@
           </a>
         </li>
 
-        <li class="@(ViewBag.Title == "Marcas" ? "active" : "")">
+        <li class="@(ViewBag.Title == "Marcas" || ViewBag.Title == "Adicionar Marca" || ViewBag.Title == "Editar Marca" || 
+                     ViewBag.Title == "Excluir Marca" || ViewBag.Title == "Detalhes Marca" ? "active" : "")">
           <a asp-controller="Marca" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
             <span class="material-symbols-outlined mr-2">
               copyright
@@ -90,7 +91,8 @@
           </a>
         </li>
 
-        <li class="@(ViewBag.Title == "Peças" ? "active" : "")">
+        <li class="@(ViewBag.Title == "Peças" || ViewBag.Title == "Adicionar Peça" || ViewBag.Title == "Editar Peça" || 
+                     ViewBag.Title == "Excluir Peça" || ViewBag.Title == "Detalhes Peça" ? "active" : "")">
           <a asp-controller="Peca" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
             <span class="material-icons mr-2">
               build
@@ -98,8 +100,9 @@
           </a>
         </li>
 
-        <li class="@(ViewBag.Title == "Serviços" ? "active" : "")">
-          <a href="profile.html" style="display: flex; justify-content: start; align-items: center;">
+        <li class="@(ViewBag.Title == "Serviços" || ViewBag.Title == "Adicionar Serviço" || ViewBag.Title == "Editar Serviço" || 
+                     ViewBag.Title == "Excluir Serviço" || ViewBag.Title == "Detalhes Serviço" ? "active" : "")">
+          <a asp-controller="Servico" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
             <span class="material-icons mr-2">
               miscellaneous_services
             </span> <span>Serviços</span>

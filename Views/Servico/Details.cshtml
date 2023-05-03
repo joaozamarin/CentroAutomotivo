@@ -1,11 +1,11 @@
-@model CentroAutomotivo.Models.Marca
+@model CentroAutomotivo.Models.Servico
 
 @{
-    ViewData["Title"] = "Detalhes Marca";
+    ViewData["Title"] = "Detalhes Serviço";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Marcas</h1>
+<h1>Serviços</h1>
 <h6>Detalhes</h6>
 <hr />
 <div class="row">
@@ -13,7 +13,11 @@
         <div class="row">
             <div class="form-group col-4">
                 <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" readonly />
+                <input asp-for="Nome" class="form-control" readonly/>
+            </div>
+            <div class="form-group col-2">
+                <label asp-for="Preco" class="control-label"></label>
+                <input asp-for="Preco" class="form-control" readonly/>
             </div>
         </div>
         <div class="form-group">
