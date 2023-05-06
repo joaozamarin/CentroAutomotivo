@@ -1,0 +1,40 @@
+@model CentroAutomotivo.Models.Modelo
+
+@{
+    ViewData["Title"] = "Adicionar Modelo";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Modelos</h1>
+<h6>Adicionar</h6>
+<hr />
+<div class="row">
+    <div class="col">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group col-4">
+                    <label asp-for="Nome" class="control-label"></label>
+                    <input asp-for="Nome" class="form-control" placeholder="Nome" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group col-1">
+                    <label asp-for="Ano" class="control-label"></label>
+                    <input asp-for="Ano" class="form-control" placeholder="Ano" />
+                    <span asp-validation-for="Ano" class="text-danger"></span>
+                </div>
+                <div class="form-group col-2">
+                    <label asp-for="MarcaId" class="control-label"></label>
+                    <select asp-for="MarcaId" class="form-control custom-select" asp-items="ViewBag.MarcaId">
+                        <option selected disabled>Selecione...</option>
+                    </select>
+                    <span asp-validation-for="MarcaId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

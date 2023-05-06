@@ -74,8 +74,9 @@
           </a>
         </li>
 
-        <li class="@(ViewBag.Title == "Modelos" ? "active" : "")">
-          <a href="forms.html" style="display: flex; justify-content: start; align-items: center;">
+        <li class="@(ViewBag.Title == "Modelos" || ViewBag.Title == "Adicionar Modelo" || ViewBag.Title == "Editar Modelo" || 
+                     ViewBag.Title == "Excluir Modelo" || ViewBag.Title == "Detalhes Modelo" ? "active" : "")">
+          <a asp-controller="Modelo" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
             <span class="material-icons mr-2">
               airport_shuttle
             </span> <span>Modelos</span>
