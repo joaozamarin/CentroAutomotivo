@@ -109,8 +109,9 @@
           </a>
         </li>
 
-        <li class="@(ViewBag.Title == "Status Ordem" ? "active" : "")">
-          <a href="login.html" style="display: flex; justify-content: start; align-items: center;">
+        <li class="@(ViewBag.Title == "Status Ordem" || ViewBag.Title == "Adicionar Status" || ViewBag.Title == "Editar Status" || 
+                     ViewBag.Title == "Excluir Status" || ViewBag.Title == "Detalhes Status" ? "active" : "")">
+          <a asp-controller="StatusOrdemServico" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
             <span class="material-icons mr-2">
               battery_5_bar
             </span> <span>Status Ordem</span>
