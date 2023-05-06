@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group col-2">
                     <label asp-for="Cor" class="control-label"></label>
-                    <input asp-for="Cor" class="form-control" />
+                    <input id="cp1" asp-for="Cor" class="form-control" />
                     <span asp-validation-for="Cor" class="text-danger"></span>
                 </div>
             </div>
@@ -31,3 +31,18 @@
         </form>
     </div>
 </div>
+
+@section Styles{
+    <link href="~/dist/css/bootstrap-colorpicker.css" rel="stylesheet">
+}
+
+@section Scripts{
+    <script src="//code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="//unpkg.com/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/dist/js/bootstrap-colorpicker.js"></script>
+    <script>
+        $(function () {
+            $('#cp1').colorpicker();
+        });
+    </script>
+}
