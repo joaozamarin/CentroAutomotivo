@@ -1,52 +1,75 @@
 @model CentroAutomotivo.Models.Veiculo
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Veículo";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Edit</h1>
-
-<h4>Veiculo</h4>
+<h1>Veículos</h1>
+<h6>Adicionar</h6>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="Nome" class="control-label"></label>
+                    <input asp-for="Nome" class="form-control" placeholder="Nome" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="AppUserId" class="control-label"></label>
+                    <select asp-for="AppUserId" class="form-control custom-select" asp-items="ViewBag.AppUserId">
+                        <option selected disabled>Selecione...</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Placa" class="control-label"></label>
-                <input asp-for="Placa" class="form-control" />
-                <span asp-validation-for="Placa" class="text-danger"></span>
+            <div class="row">
+                <div class="form-group col-4">
+                    <label asp-for="Placa" class="control-label"></label>
+                    <input asp-for="Placa" class="form-control" placeholder="ABC-9999" />
+                    <span asp-validation-for="Placa" class="text-danger"></span>
+                </div>
+                <div class="form-group col-5">
+                    <label asp-for="ModeloId" class="control-label"></label>
+                    <select asp-for="ModeloId" class="form-control custom-select" asp-items="ViewBag.ModeloId">
+                        <option selected disabled>Selecione...</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Imagem" class="control-label"></label>
-                <input asp-for="Imagem" class="form-control" />
-                <span asp-validation-for="Imagem" class="text-danger"></span>
+            <div class="form-group mt-2">
+                <input type="submit" value="Salvar" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">Cancelar</a>
             </div>
-            <div class="form-group">
-                <label asp-for="ModeloId" class="control-label"></label>
-                <select asp-for="ModeloId" class="form-control" asp-items="ViewBag.ModeloId"></select>
-                <span asp-validation-for="ModeloId" class="text-danger"></span>
+        </div>
+        <div class="col-lg-5">
+            <div class="row">
+                <div class="form-group col-12 custom">
+                    <label asp-for="Imagem" class="control-label"></label>
+                    <input type="file" asp-for="Imagem" class="form-control" accept=".jpg,.jpeg,.png,.gif,.jfif" />
+                    <img src="@Model.Imagem" class="img-fluid border" id="imgBanco" />
+                    <img src="" class="img-fluid border" id="PreviewImage" />
+                    <span asp-validation-for="Imagem" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="AppUserId" class="control-label"></label>
-                <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserId"></select>
-                <span asp-validation-for="AppUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts{
+    <script>
+        window.addEventListener('load', function () {
+            document.querySelector('input[type="file"]').addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    var img = document.getElementById('PreviewImage');
+                    img.src = URL.createObjectURL(this.files[0]);
 
+                    var imgBanco = document.getElementById('imgBanco');
+                    imgBanco.style.display = 'none';
+                }
+            });
+        });
+    </script>
+}

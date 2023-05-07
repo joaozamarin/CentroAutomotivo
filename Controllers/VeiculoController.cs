@@ -63,7 +63,7 @@ namespace CentroAutomotivo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Placa,Imagem,ModeloId,AppUserId")] Veiculo veiculo, IFormFile imagem)
         {
-            ViewData["AppUserId"] = new SelectList(_context.AppUsers, "Id", "Id", veiculo.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.AppUsers, "Id", "Nome", veiculo.AppUserId);
             ViewData["ModeloId"] = new SelectList(_context.Modelos, "Id", "Nome", veiculo.ModeloId);
 
             if (ModelState.IsValid)
@@ -74,6 +74,12 @@ namespace CentroAutomotivo.Controllers
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imagem.FileName);
                     string uploads = Path.Combine(wwwRootPath, @"imagens\veiculos");
                     string newFile = Path.Combine(uploads, fileName);
+
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+
                     using (var stream = new FileStream(newFile, FileMode.Create))
                     {
                         imagem.CopyTo(stream);
@@ -101,7 +107,7 @@ namespace CentroAutomotivo.Controllers
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.AppUsers, "Id", "Id", veiculo.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.AppUsers, "Id", "Nome", veiculo.AppUserId);
             ViewData["ModeloId"] = new SelectList(_context.Modelos, "Id", "Nome", veiculo.ModeloId);
             return View(veiculo);
         }
@@ -111,8 +117,11 @@ namespace CentroAutomotivo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Placa,Imagem,ModeloId,AppUserId")] Veiculo veiculo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Placa,Imagem,ModeloId,AppUserId")] Veiculo veiculo, IFormFile imagem)
         {
+            ViewData["AppUserId"] = new SelectList(_context.AppUsers, "Id", "Nome", veiculo.AppUserId);
+            ViewData["ModeloId"] = new SelectList(_context.Modelos, "Id", "Nome", veiculo.ModeloId);
+
             if (id != veiculo.Id)
             {
                 return NotFound();
@@ -122,6 +131,28 @@ namespace CentroAutomotivo.Controllers
             {
                 try
                 {
+                    if (imagem != null)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imagem.FileName);
+                        string uploads = Path.Combine(wwwRootPath, @"imagens\veiculos");
+                        string newFile = Path.Combine(uploads, fileName);
+
+                        if (!Directory.Exists(uploads))
+                        {
+                            Directory.CreateDirectory(uploads);
+                        }
+
+                        using (var stream = new FileStream(newFile, FileMode.Create))
+                        {
+                            imagem.CopyTo(stream);
+                        }
+                        veiculo.Imagem = @"\imagens\veiculos\" + fileName;
+                    }
+                    else
+                    {
+                        veiculo.Imagem = _context.Veiculos.AsNoTracking().FirstOrDefault(v => v.Id == veiculo.Id).Imagem;
+                    }
                     _context.Update(veiculo);
                     await _context.SaveChangesAsync();
                 }
@@ -138,8 +169,6 @@ namespace CentroAutomotivo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.AppUsers, "Id", "Id", veiculo.AppUserId);
-            ViewData["ModeloId"] = new SelectList(_context.Modelos, "Id", "Nome", veiculo.ModeloId);
             return View(veiculo);
         }
 
