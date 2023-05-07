@@ -68,8 +68,9 @@
           </a>
         </li>
 
-        <li class="@(ViewBag.Title == "Veículos" ? "active" : "")">
-          <a href="icons.html" style="display: flex; justify-content: start; align-items: center;">
+        <li class="@(ViewBag.Title == "Veículos" || ViewBag.Title == "Adicionar Veículo" || ViewBag.Title == "Editar Veículo" || 
+                     ViewBag.Title == "Excluir Veículo" || ViewBag.Title == "Detalhes Veículo" ? "active" : "")">
+          <a asp-controller="Veiculo" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
             <span class="material-icons mr-2">drive_eta</span> <span>Veículos</span>
           </a>
         </li>
