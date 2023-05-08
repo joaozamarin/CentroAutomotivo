@@ -51,7 +51,7 @@ namespace CentroAutomotivo.Controllers
         // GET: Veiculo/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.AppUsers, "Id", "Nome");
+            ViewData["AppUserId"] = new SelectList(_context.AppUsers.Where(u => u.IsAdmin == false), "Id", "Nome");
             ViewData["ModeloId"] = new SelectList(_context.Modelos, "Id", "Nome");
             return View();
         }
