@@ -17,19 +17,20 @@ namespace CentroAutomotivo.Models
 
         [Display(Name = "Placa")]
         [Required(ErrorMessage = "Informe a placa do Veículo")]
-        [StringLength(7, ErrorMessage = "A placa do Veículo deve possuir 7 caracteres", MinimumLength = 7)]
+        [StringLength(8, ErrorMessage = "A placa do Veículo deve possuir 8 caracteres", MinimumLength = 8)]
         public string Placa { get; set; }
 
         [StringLength(400)]
         public string Imagem { get; set; }
 
         [Display(Name = "Modelo")]
+        [Required(ErrorMessage = "Informe o modelo do Veículo")]
         public int ModeloId { get; set; }
         [ForeignKey("ModeloId")]
         public Modelo Modelo { get; set; }
 
         [Display(Name = "Proprietário")]
-        [Required]
+        [Required(ErrorMessage = "Informe o proprietário dod Veículo")]
         public string AppUserId { get; set; }
         [ForeignKey("AppUserId")]
         public AppUser AppUser { get; set; }

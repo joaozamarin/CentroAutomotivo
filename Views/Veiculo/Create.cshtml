@@ -45,27 +45,26 @@
             </div>
         </div>
         <div class="col-lg-5">
-            <div class="row">
+            <div class="row d-flex flex-column align-items-center">
                 <div class="form-group col-12 custom">
                     <label asp-for="Imagem" class="control-label"></label>
                     <input type="file" asp-for="Imagem" class="form-control" accept=".jpg,.jpeg,.png,.gif,.jfif" />
-                    <img src="" class="img-fluid border" id="PreviewImage" />
-                    <span asp-validation-for="Imagem" class="text-danger"></span>
                 </div>
+                <img src="" class="img-fluid border" id="PreviewImage" />
             </div>
         </div>
     </div>
 </form>
 
 @section Scripts{
-    <script>
-        window.addEventListener('load', function () {
-            document.querySelector('input[type="file"]').addEventListener('change', function () {
-                if (this.files && this.files[0]) {
-                    var img = document.getElementById('PreviewImage');
-                    img.src = URL.createObjectURL(this.files[0]);
-                }
-            });
+<script>
+    window.addEventListener('load', function () {
+        document.querySelector('input[type="file"]').addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                var img = document.getElementById('PreviewImage');
+                img.src = URL.createObjectURL(this.files[0]);
+            }
         });
-    </script>
+    });
+</script>
 }
