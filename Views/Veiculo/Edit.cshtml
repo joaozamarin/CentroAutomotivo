@@ -50,6 +50,10 @@
                     <label asp-for="Imagem" class="control-label"></label>
                     <input type="file" asp-for="Imagem" class="form-control" accept=".jpg,.jpeg,.png,.gif,.jfif" />
                 </div>
+                @if (Model.Imagem == null)
+                {
+                    <h4 class="text-center text-danger" id="withoutImg">Não há imagem para este Veículo</h4>
+                }
                 <img src="@Model.Imagem" class="img-fluid border" id="imgBanco" />
                 <img src="" class="img-fluid border" id="PreviewImage" />
                 <span asp-validation-for="Imagem" class="text-danger"></span>
@@ -67,7 +71,10 @@
                 img.src = URL.createObjectURL(this.files[0]);
 
                 var imgBanco = document.getElementById('imgBanco');
+                var semImg = document.getElementById('withoutImg');
+
                 imgBanco.style.display = 'none';
+                semImg.style.display = 'none';
             }
         });
     });

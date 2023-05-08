@@ -40,8 +40,15 @@
             <div class="row">
                 <div class="form-group col-12 custom">
                     <label asp-for="Imagem" class="control-label"></label>
-                    <img src="@Model.Imagem" class="img-fluid border" alt=""
+                    @if (Model.Imagem != null)
+                    {
+                        <img src="@Model.Imagem" class="img-fluid border" alt=""
                         style="min-width: 500px; height: auto; max-width: 100%;">
+                    }
+                    else
+                    {
+                        <h4 class="text-center text-danger">Não há imagem para este Veículo</h4>
+                    }
                 </div>
             </div>
         </div>
