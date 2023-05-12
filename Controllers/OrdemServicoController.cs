@@ -22,7 +22,10 @@ namespace CentroAutomotivo.Controllers
         // GET: OrdemServico
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.OrdensServico.Include(o => o.StatusOrdemServico).Include(o => o.Veiculo);
+            var appDbContext = _context.OrdensServico.Include(o => o.StatusOrdemServico)
+                                                     .Include(o => o.Veiculo)
+                                                        .ThenInclude(v => v.AppUser);
+
             return View(await appDbContext.ToListAsync());
         }
 
@@ -49,10 +52,12 @@ namespace CentroAutomotivo.Controllers
         // GET: OrdemServico/Create
         public IActionResult Create()
         {
+            var ordemServico = new OrdemServico();
+
             ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Nome");
             ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome");
 
-            return View();
+            return View(ordemServico);
         }
 
         // POST: OrdemServico/Create
