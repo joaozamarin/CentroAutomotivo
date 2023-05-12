@@ -24,7 +24,8 @@ namespace CentroAutomotivo.Controllers
         {
             var appDbContext = _context.OrdensServico.Include(o => o.StatusOrdemServico)
                                                      .Include(o => o.Veiculo)
-                                                        .ThenInclude(v => v.AppUser);
+                                                        .ThenInclude(v => v.AppUser)
+                                                     .OrderByDescending(o => o.DataEntrada);
 
             return View(await appDbContext.ToListAsync());
         }
