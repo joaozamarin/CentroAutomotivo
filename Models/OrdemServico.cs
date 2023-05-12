@@ -12,7 +12,7 @@ namespace CentroAutomotivo.Models
 
         [Display(Name = "Data de Entrada")]
         [Required]
-        public DateTime DataEntrada { get; set; } = DateTime.Now;
+        public DateTime DataEntrada { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0 );
 
         [Display(Name = "Data de Saída")]
         public DateTime DataSaida { get; set; }
