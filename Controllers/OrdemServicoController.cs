@@ -87,13 +87,24 @@ namespace CentroAutomotivo.Controllers
                 return NotFound();
             }
 
-            var ordemServico = await _context.OrdensServico.FindAsync(id);
+            var ordemServico = await _context.OrdensServico.Include(o => o.StatusOrdemServico)
+                                                           .Include(o => o.Veiculo)
+                                                                .ThenInclude(v => v.AppUser)
+                                                           .Include(o => o.Veiculo)
+                                                                .ThenInclude(v => v.Modelo)
+                                                           .FirstOrDefaultAsync(o => o.Id == id);
             if (ordemServico == null)
             {
                 return NotFound();
             }
-            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Cor", ordemServico.StatusOrdemServicoId);
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "AppUserId", ordemServico.VeiculoId);
+
+            if (ordemServico.StatusOrdemServico.Nome != "Concluído")
+            {
+                ordemServico.DataSaida = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
+            }
+
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Nome", ordemServico.StatusOrdemServicoId);
+            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome", ordemServico.VeiculoId);
             return View(ordemServico);
         }
 
