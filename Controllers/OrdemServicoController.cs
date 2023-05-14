@@ -184,6 +184,23 @@ namespace CentroAutomotivo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult SelecionarUsuario()
+        {
+            var usuarios = _context.AppUsers.ToList();
+
+            return View(usuarios);
+        }
+
+        public IActionResult SelecionarVeiculo(string userId)
+        {
+            var veiculos = _context.Veiculos.Where(v => v.AppUserId == userId)
+                                            .Include(v => v.Modelo)
+                                                .ThenInclude(m => m.Marca)
+                                            .ToList();
+
+            return View(veiculos);
+        }
+
         private bool OrdemServicoExists(int id)
         {
           return _context.OrdensServico.Any(e => e.Id == id);
