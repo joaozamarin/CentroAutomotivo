@@ -203,6 +203,16 @@ namespace CentroAutomotivo.Controllers
             return View(veiculos);
         }
 
+        [HttpPost]
+        public JsonResult VerificarStatus(int status)
+        {
+            var statusOrdem = _context.StatusOrdensServico.FirstOrDefault(s => s.Id == status);
+
+            bool mostrarDataSaida = (statusOrdem.Nome == "Concluído");
+
+            return Json(new { mostrarDataSaida });
+        }
+
         private bool OrdemServicoExists(int id)
         {
           return _context.OrdensServico.Any(e => e.Id == id);

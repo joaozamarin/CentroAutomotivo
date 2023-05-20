@@ -18,14 +18,14 @@
                     <input asp-for="DataEntrada" class="form-control" />
                     <span asp-validation-for="DataEntrada" class="text-danger"></span>
                 </div>
-                <div class="form-group col-3">
+                <div class="form-group col-3" id="dataSaidaContainer" style="display: none;">
                     <label asp-for="DataSaida" class="control-label"></label>
                     <input asp-for="DataSaida" class="form-control" />
                     <span asp-validation-for="DataSaida" class="text-danger"></span>
                 </div>
                 <div class="form-group col-3">
                     <label asp-for="StatusOrdemServicoId" class="control-label"></label>
-                    <select asp-for="StatusOrdemServicoId" class="form-control"
+                    <select asp-for="StatusOrdemServicoId" id="statusCombo" class="form-control"
                         asp-items="ViewBag.StatusOrdemServicoId"></select>
                     <span asp-validation-for="StatusOrdemServicoId" class="text-danger"></span>
                 </div>
@@ -112,3 +112,36 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function Request(status) {
+            $.ajax({
+                url: '/OrdemServico/VerificarStatus',
+                type: 'POST',
+                data: { status: status },
+                success: function (response) {
+                    if (response.mostrarDataSaida) {
+                        $('#dataSaidaContainer').show();
+                    } else {
+                        $('#dataSaidaContainer').hide();
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            var statusOrdem = $('#statusCombo').val();
+
+            Request(statusOrdem);
+
+            $('#statusCombo').change(function () {
+                var status = $(this).val();
+
+                Request(status);
+            });
+        });
+    </script>
+}
