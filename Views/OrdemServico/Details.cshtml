@@ -1,49 +1,111 @@
 @model CentroAutomotivo.Models.OrdemServico
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes Ordem de Serviço";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>OrdemServico</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataEntrada)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataEntrada)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataSaida)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataSaida)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StatusOrdemServico)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StatusOrdemServico.Cor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Veiculo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Veiculo.AppUserId)
-        </dd>
-    </dl>
+<h1>Ordens de Serviço</h1>
+<h6>Detalhes</h6>
+<hr />
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="form-group col-3">
+                <label asp-for="DataEntrada" class="control-label"></label>
+                <input asp-for="DataEntrada" class="form-control" readonly />
+                <span asp-validation-for="DataEntrada" class="text-danger"></span>
+            </div>
+            @if (Model.StatusOrdemServico.Nome == "Concluído")
+            {
+                <div class="form-group col-3" id="dataSaidaContainer">
+                    <label asp-for="DataSaida" class="control-label"></label>
+                    <input asp-for="DataSaida" class="form-control" readonly />
+                    <span asp-validation-for="DataSaida" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group col-3">
+                <label asp-for="StatusOrdemServicoId" class="control-label"></label>
+                <input asp-for="StatusOrdemServico.Nome" class="form-control" readonly />
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="VeiculoId" class="control-label"></label>
+                <input asp-for="Veiculo.Nome" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label asp-for="Descricao" for="desc" class="control-label"></label>
+                <textarea asp-for="Descricao" id="desc" class="form-control" rows="3" readonly></textarea>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div id="accordion" class="mt-2">
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <div class="collapsed d-flex align-items-center justify-content-between" data-toggle="collapse"
+                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="cursor: pointer;">
+                <h5>
+                    Veículo
+                </h5>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
+                </svg>
+            </div>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label asp-for="Veiculo.Nome" class="control-label"></label>
+                                <input asp-for="Veiculo.Nome" class="form-control" readonly />
+                            </div>
+                            <div class="form-group col-6">
+                                <label asp-for="Veiculo.AppUserId" class="control-label"></label>
+                                <input asp-for="Veiculo.AppUser.Nome" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-4">
+                                <label asp-for="Veiculo.Placa" class="control-label"></label>
+                                <input asp-for="Veiculo.Placa" class="form-control" readonly />
+                            </div>
+                            <div class="form-group col-4">
+                                <label asp-for="Veiculo.ModeloId" class="control-label"></label>
+                                <input asp-for="Veiculo.Modelo.Nome" class="form-control" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="row">
+                            <div class="form-group col-12 custom">
+                                <label asp-for="Veiculo.Imagem" class="control-label"></label>
+                                @if (Model.Veiculo.Imagem != null)
+                                {
+                                    <img src="@Model.Veiculo.Imagem" class="img-fluid border" alt=""
+                                        style="min-width: 500px; height: auto; max-width: 100%;">
+                                }
+                                else
+                                {
+                                    <h4 class="text-center text-danger">Não há imagem para este Veículo</h4>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.Id">Alterar</a>
+    <a asp-action="Index" class="btn btn-danger">Voltar</a>
 </div>

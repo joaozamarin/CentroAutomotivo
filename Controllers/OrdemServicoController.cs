@@ -41,6 +41,9 @@ namespace CentroAutomotivo.Controllers
             var ordemServico = await _context.OrdensServico
                 .Include(o => o.StatusOrdemServico)
                 .Include(o => o.Veiculo)
+                    .ThenInclude(v => v.AppUser)
+                .Include(o => o.Veiculo)
+                    .ThenInclude(v => v.Modelo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ordemServico == null)
             {
@@ -147,43 +150,27 @@ namespace CentroAutomotivo.Controllers
             return View(ordemServico);
         }
 
-        // GET: OrdemServico/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.OrdensServico == null)
-            {
-                return NotFound();
-            }
+            var ordemServico = await _context.OrdensServico.FirstOrDefaultAsync(o => o.Id == id);
 
-            var ordemServico = await _context.OrdensServico
-                .Include(o => o.StatusOrdemServico)
-                .Include(o => o.Veiculo)
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (ordemServico == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Ordem de Serviço não encontrada " });
             }
 
-            return View(ordemServico);
-        }
-
-        // POST: OrdemServico/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.OrdensServico == null)
-            {
-                return Problem("Entity set 'AppDbContext.OrdensServico'  is null.");
-            }
-            var ordemServico = await _context.OrdensServico.FindAsync(id);
-            if (ordemServico != null)
+            try
             {
                 _context.OrdensServico.Remove(ordemServico);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch
+            {
+                return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
+            }
+
+            return Json( new { success = true, message = "Ordem de Serviço excluída com sucesso!"});
         }
 
         public IActionResult SelecionarUsuario()
@@ -215,7 +202,7 @@ namespace CentroAutomotivo.Controllers
 
         private bool OrdemServicoExists(int id)
         {
-          return _context.OrdensServico.Any(e => e.Id == id);
+            return _context.OrdensServico.Any(e => e.Id == id);
         }
     }
 }
