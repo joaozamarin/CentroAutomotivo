@@ -61,7 +61,8 @@
           </a>
         </li>
         <li class="@(ViewBag.Title == "Ordens de Serviço" || ViewBag.Title == "Adicionar Ordem de Serviço" || ViewBag.Title == "Editar Ordem de Serviço" || 
-                     ViewBag.Title == "Excluir Ordem de Serviço" || ViewBag.Title == "Detalhes Ordem de Serviço" ? "active" : "")">
+                     ViewBag.Title == "Excluir Ordem de Serviço" || ViewBag.Title == "Detalhes Ordem de Serviço" ||
+                     ViewBag.Title == "Selecionar Usuário" || ViewBag.Title == "Selecionar Veículo" ? "active" : "")">
           <a asp-controller="OrdemServico" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
             <span class="material-icons mr-2">
               receipt_long

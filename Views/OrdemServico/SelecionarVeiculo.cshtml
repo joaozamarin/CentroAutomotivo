@@ -12,7 +12,7 @@
 <div class="row">
     @foreach (var veiculo in Model)
     {
-        <div class="col-sm-4" style="cursor: pointer;">
+        <div class="col-sm-4" style="cursor: pointer;" onclick="GetVeiculo(@veiculo.Id)">
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row no-gutters">
                     <div class="col-md-6">
@@ -50,4 +50,12 @@
             z-index: 1000;
         }
     </style>
+}
+
+@section Scripts{
+    <script>
+        function GetVeiculo(id) {
+            window.location = '@Url.Action("Create", "OrdemServico")' + '?veiculoId=' + id;
+        }
+    </script>
 }

@@ -18,7 +18,7 @@
                     <input asp-for="DataEntrada" class="form-control" />
                     <span asp-validation-for="DataEntrada" class="text-danger"></span>
                 </div>
-                <div class="form-group col-3">
+                <div class="form-group col-3" hidden>
                     <label asp-for="DataSaida" class="control-label"></label>
                     <input asp-for="DataSaida" class="form-control" />
                     <span asp-validation-for="DataSaida" class="text-danger"></span>
@@ -29,8 +29,16 @@
                         asp-items="ViewBag.StatusOrdemServicoId"></select>
                 </div>
                 <div class="form-group col-3">
+                    <label class="control-label">Veículo</label>
+                    <input value="@Model.Veiculo.Nome" class="form-control" readonly/>
+                </div>
+                <div class="form-group col-3">
+                    <label class="control-label">Proprietário</label>
+                    <input value="@Model.Veiculo.AppUser.Nome" class="form-control" readonly/>
+                </div>
+                <div class="form-group col-3" hidden>
                     <label asp-for="VeiculoId" class="control-label"></label>
-                    <select asp-for="VeiculoId" class="form-control" asp-items="ViewBag.VeiculoId"></select>
+                    <input asp-for="VeiculoId" class="form-control" />
                 </div>
             </div>
             <div class="row">

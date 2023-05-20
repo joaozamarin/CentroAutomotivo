@@ -51,12 +51,15 @@ namespace CentroAutomotivo.Controllers
         }
 
         // GET: OrdemServico/Create
-        public IActionResult Create()
+        public IActionResult Create(int veiculoId)
         {
             var ordemServico = new OrdemServico();
 
+            ordemServico.VeiculoId = veiculoId;
+            ordemServico.Veiculo = _context.Veiculos.Include(v => v.AppUser)
+                                                    .FirstOrDefault(v => v.Id == veiculoId);
+
             ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Nome");
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome");
 
             return View(ordemServico);
         }
@@ -66,7 +69,7 @@ namespace CentroAutomotivo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DataEntrada,DataSaida,Descricao,StatusOrdemServicoId,VeiculoId")] OrdemServico ordemServico)
+        public async Task<IActionResult> Create([Bind("Id,DataEntrada,DataSaida,Descricao,StatusOrdemServicoId,VeiculoId")] OrdemServico ordemServico, int veiculoId)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +78,6 @@ namespace CentroAutomotivo.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Cor", ordemServico.StatusOrdemServicoId);
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "AppUserId", ordemServico.VeiculoId);
             return View(ordemServico);
         }
 
