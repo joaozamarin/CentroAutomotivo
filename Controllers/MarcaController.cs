@@ -22,7 +22,7 @@ namespace CentroAutomotivo.Controllers
         // GET: Marca
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Marcas.ToListAsync());
+            return View(await _context.Marcas.ToListAsync());
         }
 
         // GET: Marca/Details/5
@@ -116,46 +116,32 @@ namespace CentroAutomotivo.Controllers
             return View(marca);
         }
 
-        // GET: Marca/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Marcas == null)
-            {
-                return NotFound();
-            }
+            var marca = await _context.Marcas.FirstOrDefaultAsync(m => m.Id == id);
 
-            var marca = await _context.Marcas
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (marca == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Marca não encontrada!" });
             }
 
-            return View(marca);
-        }
-
-        // POST: Marca/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Marcas == null)
-            {
-                return Problem("Entity set 'AppDbContext.Marcas'  is null.");
-            }
-            var marca = await _context.Marcas.FindAsync(id);
-            if (marca != null)
+            try
             {
                 _context.Marcas.Remove(marca);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch
+            {
+                return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
+            }
+
+            return Json(new { success = true, message = "Marca excluída com sucesso!" });
         }
 
         private bool MarcaExists(int id)
         {
-          return _context.Marcas.Any(e => e.Id == id);
+            return _context.Marcas.Any(e => e.Id == id);
         }
     }
 }

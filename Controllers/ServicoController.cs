@@ -22,7 +22,7 @@ namespace CentroAutomotivo.Controllers
         // GET: Servico
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Servicos.ToListAsync());
+            return View(await _context.Servicos.ToListAsync());
         }
 
         // GET: Servico/Details/5
@@ -116,46 +116,32 @@ namespace CentroAutomotivo.Controllers
             return View(servico);
         }
 
-        // GET: Servico/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Servicos == null)
-            {
-                return NotFound();
-            }
+            var servico = _context.Servicos.FirstOrDefault(s => s.Id == id);
 
-            var servico = await _context.Servicos
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (servico == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Serviço não encontrado!" });
             }
 
-            return View(servico);
-        }
-
-        // POST: Servico/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Servicos == null)
-            {
-                return Problem("Entity set 'AppDbContext.Servicos'  is null.");
-            }
-            var servico = await _context.Servicos.FindAsync(id);
-            if (servico != null)
+            try
             {
                 _context.Servicos.Remove(servico);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch
+            {
+                return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
+            }
+
+            return Json(new { success = true, message = "Serviço excluído com sucesso!" });
         }
 
         private bool ServicoExists(int id)
         {
-          return _context.Servicos.Any(e => e.Id == id);
+            return _context.Servicos.Any(e => e.Id == id);
         }
     }
 }

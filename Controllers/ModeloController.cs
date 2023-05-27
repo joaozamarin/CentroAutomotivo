@@ -122,6 +122,29 @@ namespace CentroAutomotivo.Controllers
             return View(modelo);
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var modelo = await _context.Modelos.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (modelo == null)
+            {
+                return Json(new { success = false, message = "Modelo não encontrado!" });
+            }
+
+            try
+            {
+                _context.Modelos.Remove(modelo);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
+            }
+
+            return Json(new { success = true, message = "Modelo excluído com sucesso!" });
+        }
+
         // GET: Modelo/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -155,14 +178,14 @@ namespace CentroAutomotivo.Controllers
             {
                 _context.Modelos.Remove(modelo);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ModeloExists(int id)
         {
-          return _context.Modelos.Any(e => e.Id == id);
+            return _context.Modelos.Any(e => e.Id == id);
         }
     }
 }

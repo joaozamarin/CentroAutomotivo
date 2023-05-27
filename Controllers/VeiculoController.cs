@@ -172,43 +172,34 @@ namespace CentroAutomotivo.Controllers
             return View(veiculo);
         }
 
-        // GET: Veiculo/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Veiculos == null)
-            {
-                return NotFound();
-            }
+            var veiculo = _context.Veiculos.FirstOrDefault(s => s.Id == id);
 
-            var veiculo = await _context.Veiculos
-                .Include(v => v.AppUser)
-                .Include(v => v.Modelo)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var osVeiculo = _context.OrdensServico.Where(o => o.VeiculoId == id).ToList();
+
             if (veiculo == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Veículo não encontrado!" });
             }
 
-            return View(veiculo);
-        }
-
-        // POST: Veiculo/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Veiculos == null)
+            if (osVeiculo.Count > 0)
             {
-                return Problem("Entity set 'AppDbContext.Veiculos'  is null.");
+                return Json(new { success = false, message = "Há Ordem de Serviço cadastrada para esse Veículo!" });
             }
-            var veiculo = await _context.Veiculos.FindAsync(id);
-            if (veiculo != null)
+
+            try
             {
                 _context.Veiculos.Remove(veiculo);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true, message = "Veículo excluído com sucesso!" });
         }
 
         private bool VeiculoExists(int id)

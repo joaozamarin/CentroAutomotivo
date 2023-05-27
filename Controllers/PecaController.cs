@@ -24,7 +24,7 @@ namespace CentroAutomotivo.Controllers
         // GET: Peca
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Pecas.ToListAsync());
+            return View(await _context.Pecas.ToListAsync());
         }
 
         // GET: Peca/Details/5
@@ -118,46 +118,32 @@ namespace CentroAutomotivo.Controllers
             return View(peca);
         }
 
-        // GET: Peca/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Pecas == null)
-            {
-                return NotFound();
-            }
+            var peca = _context.Pecas.FirstOrDefault(s => s.Id == id);
 
-            var peca = await _context.Pecas
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (peca == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Peça não encontrada!" });
             }
 
-            return View(peca);
-        }
-
-        // POST: Peca/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Pecas == null)
-            {
-                return Problem("Entity set 'AppDbContext.Pecas'  is null.");
-            }
-            var peca = await _context.Pecas.FindAsync(id);
-            if (peca != null)
+            try
             {
                 _context.Pecas.Remove(peca);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch
+            {
+                return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
+            }
+
+            return Json(new { success = true, message = "Peça excluída com sucesso!" });
         }
 
         private bool PecaExists(int id)
         {
-          return _context.Pecas.Any(e => e.Id == id);
+            return _context.Pecas.Any(e => e.Id == id);
         }
     }
 }

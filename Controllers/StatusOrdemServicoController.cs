@@ -22,7 +22,7 @@ namespace CentroAutomotivo.Controllers
         // GET: StatusOrdemServico
         public async Task<IActionResult> Index()
         {
-              return View(await _context.StatusOrdensServico.ToListAsync());
+            return View(await _context.StatusOrdensServico.ToListAsync());
         }
 
         // GET: StatusOrdemServico/Details/5
@@ -116,46 +116,32 @@ namespace CentroAutomotivo.Controllers
             return View(statusOrdemServico);
         }
 
-        // GET: StatusOrdemServico/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.StatusOrdensServico == null)
-            {
-                return NotFound();
-            }
+            var statusOrdemServico = _context.StatusOrdensServico.FirstOrDefault(s => s.Id == id);
 
-            var statusOrdemServico = await _context.StatusOrdensServico
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (statusOrdemServico == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Status não encontrado!" });
             }
 
-            return View(statusOrdemServico);
-        }
-
-        // POST: StatusOrdemServico/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.StatusOrdensServico == null)
-            {
-                return Problem("Entity set 'AppDbContext.StatusOrdensServico'  is null.");
-            }
-            var statusOrdemServico = await _context.StatusOrdensServico.FindAsync(id);
-            if (statusOrdemServico != null)
+            try
             {
                 _context.StatusOrdensServico.Remove(statusOrdemServico);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch
+            {
+                return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
+            }
+
+            return Json(new { success = true, message = "Status excluído com sucesso!" });
         }
 
         private bool StatusOrdemServicoExists(int id)
         {
-          return _context.StatusOrdensServico.Any(e => e.Id == id);
+            return _context.StatusOrdensServico.Any(e => e.Id == id);
         }
     }
 }
