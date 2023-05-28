@@ -97,6 +97,10 @@ namespace CentroAutomotivo.Controllers
                                                                 .ThenInclude(v => v.AppUser)
                                                            .Include(o => o.Veiculo)
                                                                 .ThenInclude(v => v.Modelo)
+                                                            .Include(o => o.ServicosOrdem)
+                                                                .ThenInclude(s => s.Servico)
+                                                            .Include(o => o.PecasOrdem)
+                                                                .ThenInclude(p => p.Peca)
                                                            .FirstOrDefaultAsync(o => o.Id == id);
             if (ordemServico == null)
             {
@@ -110,6 +114,8 @@ namespace CentroAutomotivo.Controllers
 
             ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Nome", ordemServico.StatusOrdemServicoId);
             ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome", ordemServico.VeiculoId);
+            ViewData["Servicos"] = new SelectList(_context.Servicos.OrderBy(s => s.Nome), "Id", "Nome");
+            ViewData["Pecas"] = new SelectList(_context.Pecas.Where(p => p.Quantidade >= 5).OrderBy(s => s.Nome), "Id", "Nome");
             return View(ordemServico);
         }
 
@@ -127,6 +133,11 @@ namespace CentroAutomotivo.Controllers
 
             if (ModelState.IsValid)
             {
+                ordemServico.ServicosOrdem = new List<ServicoOrdem>();
+                ordemServico.PecasOrdem = new List<PecaOrdem>();
+
+
+
                 try
                 {
                     _context.Update(ordemServico);
@@ -147,6 +158,8 @@ namespace CentroAutomotivo.Controllers
             }
             ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Cor", ordemServico.StatusOrdemServicoId);
             ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "AppUserId", ordemServico.VeiculoId);
+            ViewData["Servicos"] = new SelectList(_context.Servicos.OrderBy(s => s.Nome), "Id", "Nome");
+            ViewData["Pecas"] = new SelectList(_context.Pecas.Where(p => p.Quantidade >= 5).OrderBy(s => s.Nome), "Id", "Nome");
             return View(ordemServico);
         }
 

@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group col-3">
                     <label class="control-label">Veículo</label>
-                    <input value="@Model.Veiculo.Nome" class="form-control" readonly/>
+                    <input value="@Model.Veiculo.Nome" class="form-control" readonly />
                 </div>
                 <div class="form-group col-3" hidden>
                     <label asp-for="VeiculoId" class="control-label"></label>
@@ -45,6 +45,107 @@
                     <span asp-validation-for="Descricao" class="text-danger"></span>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <h4>Serviços</h4>
+                            <div class="d-flex">
+                                <select id="servicos" class="form-control mr-2" asp-items="ViewBag.Servicos">
+                                    <option disabled selected>Selecione...</option>
+                                </select>
+                                <button type="button" class="btn btn-outline-info btn-sm">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Nome
+                                        </th>
+                                        <th>
+                                            Valor
+                                        </th>
+                                        <th class="text-center" style="width: 15%;">
+                                            Ações
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Teste</td>
+                                        <td>Teste</td>
+                                        <td class="text-center">X</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <h4>Peças</h4>
+                            <div class="d-flex">
+                                <select id="pecas" class="form-control mr-2" asp-items="ViewBag.Pecas">
+                                    <option disabled selected>Selecione...</option>
+                                </select>
+                                <select id="pecasQtd" class="form-control mr-2" style="max-width: 100px;">
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <button type="button" class="btn btn-outline-info btn-sm">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40%;">
+                                            Nome
+                                        </th>
+                                        <th>
+                                            Quantidade
+                                        </th>
+                                        <th>
+                                            Valor
+                                        </th>
+                                        <th class="text-center" style="width: 15%;">
+                                            Ações
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Teste</td>
+                                        <td>Teste</td>
+                                        <td>Teste</td>
+                                        <td class="text-center">X</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-danger">Cancelar</a>
