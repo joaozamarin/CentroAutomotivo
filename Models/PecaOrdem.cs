@@ -15,5 +15,6 @@ namespace CentroAutomotivo.Models
         public int PecaId { get; set; }
         [ForeignKey("PecaId")]
         public Peca Peca { get; set; }
+        public int Quantidade { get; set; }
     }
 }
