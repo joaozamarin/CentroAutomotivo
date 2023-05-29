@@ -255,11 +255,11 @@
 
         function addServico() {
             let servico = document.getElementById('servicoSelected').value;
-            let servicoExist = servicos.findIndex((s) => s == servico) == -1;
+            let servicoExist = servicos.findIndex((s) => s == servico) != -1;
 
             if (servico == 'Selecione...') {
                 return;
-            } else if (servicoExist) {
+            } else if (!servicoExist) {
                 servicos.push(servico);
             } else {
                 alert('Esse serviço já foi adicionado!');
