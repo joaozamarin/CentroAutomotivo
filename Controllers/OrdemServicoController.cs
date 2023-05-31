@@ -133,12 +133,34 @@ namespace CentroAutomotivo.Controllers
 
             if (ModelState.IsValid)
             {
-                string[] servicos;
-                
+                ordemServico.ServicosOrdem = new List<ServicoOrdem>();
+
                 if (servicoSelected.Length > 1)
                 {
-                    servicos = servicoSelected.Split(",");
+                    var servicos = servicoSelected.Split(",");
+
+                    foreach (var servico in servicos)
+                    {
+                        _context.Add(
+                            new ServicoOrdem
+                            {
+                                OrdemServicoId = ordemServico.Id,
+                                ServicoId = int.Parse(servico)
+                            }
+                        );
+                    }
                 }
+                else if (servicoSelected.Length == 1)
+                {
+                    _context.Add(
+                        new ServicoOrdem
+                        {
+                            OrdemServicoId = ordemServico.Id,
+                            ServicoId = int.Parse(servicoSelected)
+                        }
+                    );
+                }
+
 
                 try
                 {
