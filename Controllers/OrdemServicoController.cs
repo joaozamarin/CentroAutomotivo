@@ -124,7 +124,7 @@ namespace CentroAutomotivo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataEntrada,DataSaida,Descricao,StatusOrdemServicoId,VeiculoId")] OrdemServico ordemServico)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DataEntrada,DataSaida,Descricao,StatusOrdemServicoId,VeiculoId")] OrdemServico ordemServico, string servicoSelected)
         {
             if (id != ordemServico.Id)
             {
@@ -133,10 +133,12 @@ namespace CentroAutomotivo.Controllers
 
             if (ModelState.IsValid)
             {
-                ordemServico.ServicosOrdem = new List<ServicoOrdem>();
-                ordemServico.PecasOrdem = new List<PecaOrdem>();
-
-
+                string[] servicos;
+                
+                if (servicoSelected.Length > 1)
+                {
+                    servicos = servicoSelected.Split(",");
+                }
 
                 try
                 {

@@ -43,6 +43,23 @@ namespace CentroAutomotivo.Controllers
             return View(servico);
         }
 
+        public async Task<JsonResult> ObterServico(int? id)
+        {
+            if (id == null || _context.Servicos == null)
+            {
+                return Json(new { message = "Id inválido" });
+            }
+
+            var servico = await _context.Servicos
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (servico == null)
+            {
+                return Json(new { message = "Serviço não encontrado" });
+            }
+
+            return Json(servico);
+        }
+
         // GET: Servico/Create
         public IActionResult Create()
         {

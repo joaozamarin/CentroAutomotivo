@@ -48,6 +48,7 @@
                                 <select id="servicoSelected" class="form-control mr-2" asp-items="ViewBag.Servicos">
                                     <option disabled selected>Selecione...</option>
                                 </select>
+                                <input hidden id="inputServicos" type="text" name="servicoSelected">
                                 <button onclick="addServico()" type="button"
                                     class="btn btn-outline-info btn-sm">Adicionar</button>
                             </div>
@@ -59,24 +60,18 @@
                             <table id="servicos" class="table table-striped table-bordered table-sm">
                                 <thead>
                                     <tr>
-                                        <th>
+                                        <th style="width: 50%;">
                                             Nome
                                         </th>
                                         <th>
                                             Valor
                                         </th>
                                         <th class="text-center" style="width: 15%;">
-                                            Ações
+                                            Ação
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Teste</td>
-                                        <td>Teste</td>
-                                        <td class="text-center">X</td>
-                                    </tr>
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -117,7 +112,7 @@
                                             Valor
                                         </th>
                                         <th class="text-center" style="width: 15%;">
-                                            Ações
+                                            Ação
                                         </th>
                                     </tr>
                                 </thead>
@@ -204,7 +199,7 @@
                                 @if (Model.Veiculo.Imagem != null)
                                 {
                                     <img src="@Model.Veiculo.Imagem" class="img-fluid border" alt=""
-                                        style="min-width: 500px; height: auto; max-width: 100%;">
+                                    style="min-width: 500px; height: auto; max-width: 100%;">
                                 }
                                 else
                                 {
@@ -220,50 +215,86 @@
 </div>
 
 @section Scripts{
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        function Request(status) {
+<script>
+    function Request(status) {
+        $.ajax({
+            url: '/OrdemServico/VerificarStatus',
+            type: 'POST',
+            data: { status: status },
+            success: function (response) {
+                if (response.mostrarDataSaida) {
+                    $('#dataSaidaContainer').show();
+                } else {
+                    $('#dataSaidaContainer').hide();
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        var statusOrdem = $('#statusCombo').val();
+
+        Request(statusOrdem);
+
+        $('#statusCombo').change(function () {
+            var status = $(this).val();
+
+            Request(status);
+        });
+    });
+
+    // Adicionar Serviços
+    let servicos = [];
+
+    function addServico() {
+        let servico = document.getElementById('servicoSelected').value;
+        let servicoExist = servicos.findIndex((s) => s == servico) != -1;
+
+        if (servico == 'Selecione...') return;
+
+        if (!servicoExist) {
+            servicos.push(servico);
+
             $.ajax({
-                url: '/OrdemServico/VerificarStatus',
-                type: 'POST',
-                data: { status: status },
+                url: '/Servico/ObterServico/' + servico,
+                dataType: 'json',
                 success: function (response) {
-                    if (response.mostrarDataSaida) {
-                        $('#dataSaidaContainer').show();
-                    } else {
-                        $('#dataSaidaContainer').hide();
-                    }
+                    var row =
+                        `<tr id='${servico}servico''>
+                        <td> ${response.nome} </td>
+                        <td> R$ ${response.preco},00 </td>
+                        <td class="d-flex justify-content-center">
+                            <a onclick='removerServico(${servico})' title="Excluir" class="text-danger" style="cursor: pointer;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#de2935" class="bi bi-trash-fill"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>`;
+
+                    $('#servicos tbody').append(row);
+                    console.log(response);
                 }
             });
+
+        } else {
+            alert('Esse serviço já foi adicionado!');
         }
+        document.getElementById('inputServicos').value = servicos;
+    }
 
-        $(document).ready(function () {
-            var statusOrdem = $('#statusCombo').val();
+    function removerServico(id) {
+        document.getElementById(id + 'servico').remove();
 
-            Request(statusOrdem);
+        let servico = servicos.findIndex((s) => s == id);
+        servicos.splice(servico, 1)
 
-            $('#statusCombo').change(function () {
-                var status = $(this).val();
-
-                Request(status);
-            });
-        });
-
-        // Adicionar Serviços
-        let servicos = [];
-
-        function addServico() {
-            let servico = document.getElementById('servicoSelected').value;
-            let servicoExist = servicos.findIndex((s) => s == servico) != -1;
-
-            if (servico == 'Selecione...') {
-                return;
-            } else if (!servicoExist) {
-                servicos.push(servico);
-            } else {
-                alert('Esse serviço já foi adicionado!');
-            }
-        }
-    </script>
+        console.log(servicos);
+        document.getElementById('inputServicos').value = servicos;
+    }
+</script>
 }
