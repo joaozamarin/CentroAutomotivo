@@ -45,6 +45,23 @@ namespace CentroAutomotivo.Controllers
             return View(peca);
         }
 
+        public async Task<JsonResult> ObterPeca(int? id)
+        {
+            if (id == null || _context.Pecas == null)
+            {
+                return Json(new { message = "Id inválido" });
+            }
+
+            var peca = await _context.Pecas
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (peca == null)
+            {
+                return Json(new { message = "Peça não encontrada" });
+            }
+
+            return Json(peca);
+        }
+
         // GET: Peca/Create
         public IActionResult Create()
         {

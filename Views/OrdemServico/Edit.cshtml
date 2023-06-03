@@ -48,10 +48,10 @@
                                 <select id="servicoSelected" class="form-control mr-2" asp-items="ViewBag.Servicos">
                                     <option disabled selected>Selecione...</option>
                                 </select>
-                                <input hidden id="inputServicos" type="text" name="servicoSelected">
                                 <button onclick="addServico()" type="button"
                                     class="btn btn-outline-info btn-sm">Adicionar</button>
                             </div>
+                            <input hidden id="inputServicos" type="text" name="servicoSelected">
                         </div>
                     </div>
 
@@ -100,7 +100,7 @@
                         <div class="form-group col-12">
                             <h4>Peças</h4>
                             <div class="d-flex">
-                                <select id="pecas" class="form-control mr-2" asp-items="ViewBag.Pecas">
+                                <select id="pecaSelected" class="form-control mr-2" asp-items="ViewBag.Pecas">
                                     <option disabled selected>Selecione...</option>
                                 </select>
                                 <select id="pecasQtd" class="form-control mr-2" style="max-width: 100px;">
@@ -110,14 +110,16 @@
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                 </select>
-                                <button type="button" class="btn btn-outline-info btn-sm">Adicionar</button>
+                                <button onclick="addPeca()" type="button" class="btn btn-outline-info btn-sm">Adicionar</button>
                             </div>
+                            <input hidden id="inputPecas" type="text" name="pecaSelected">
+                            <input hidden id="inputPecasQtd" type="text" name="pecasQtd">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-12">
-                            <table class="table table-striped table-bordered table-sm">
+                            <table id="pecas" class="table table-striped table-bordered table-sm">
                                 <thead>
                                     <tr>
                                         <th style="width: 40%;">
@@ -134,14 +136,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Teste</td>
-                                        <td>Teste</td>
-                                        <td>Teste</td>
-                                        <td class="text-center">X</td>
-                                    </tr>
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -271,6 +266,8 @@
         let id = document.getElementById('ordemId').value;
         let tableServicos = document.getElementById('servicos').rows.length;
 
+        let tablePecas = document.getElementById('pecas').rows.length;
+
         $.ajax({
             url: '/OrdemServico/GetServicosOrdem/' + id,
             dataType: 'json',
@@ -283,6 +280,10 @@
 
         if (tableServicos <= 1) {
             $('#servicos').hide();
+        }
+
+        if (tablePecas <= 1) {
+            $('#pecas').hide();
         }
     });
 
@@ -309,7 +310,7 @@
                 dataType: 'json',
                 success: function (response) {
                     var row =
-                        `<tr id='${servico}servico''>
+                    `<tr id='${servico}servico''>
                         <td> ${response.nome} </td>
                         <td> R$ ${response.preco},00 </td>
                         <td class="d-flex justify-content-center">
@@ -343,6 +344,69 @@
 
         console.log(servicos);
         document.getElementById('inputServicos').value = servicos;
+    }
+
+    // Adicionar Peças
+    let pecas = [];
+    let qtds = [];
+
+    function addPeca() {
+        let peca = document.getElementById('pecaSelected').value;
+        let pecaExist = pecas.findIndex((p) => p == peca) != -1;
+
+        let qtd = document.getElementById('pecasQtd').value;
+
+        if (peca == 'Selecione...') return ;
+
+        if (!pecaExist) {
+            $.ajax({
+                url: '/Peca/ObterPeca/' + peca,
+                dataType: 'json',
+                success: function (response) {
+                    if (response['quantidade'] >= qtd) {
+                        pecas.push(peca);
+                        qtds.push(qtd);
+
+                        var row =
+                        `<tr id='${peca}peca''>
+                            <td> ${response.nome} </td>
+                            <td> ${qtd} </td>
+                            <td> R$ ${response.preco * qtd},00 </td>
+                            <td class="d-flex justify-content-center">
+                                <a onclick='removerPeca(${peca})' title="Excluir" class="text-danger" style="cursor: pointer;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#de2935" class="bi bi-trash-fill"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>`;
+
+                        $('#pecas tbody').append(row);
+                        $('#pecas').show();
+
+                        document.getElementById('inputPecas').value = pecas;
+                        document.getElementById('inputPecasQtd').value = qtds;
+                    } else {
+                        alert('Quantidade em estoque: ' + response['quantidade']);
+                    }
+                }
+            });
+        } else {
+            alert('Essa peça já foi adicionada!');
+        }
+    }
+
+    function removerPeca(id) {
+        document.getElementById(id + 'peca').remove();
+
+        let peca = pecas.findIndex((s) => s == id);
+        pecas.splice(peca, 1);
+        qtds.splice(peca, 1);
+
+        document.getElementById('inputPecas').value = pecas;
+        document.getElementById('inputPecasQtd').value = qtds;
     }
 </script>
 }

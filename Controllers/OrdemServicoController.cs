@@ -124,7 +124,7 @@ namespace CentroAutomotivo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataEntrada,DataSaida,Descricao,StatusOrdemServicoId,VeiculoId")] OrdemServico ordemServico, string servicoSelected)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DataEntrada,DataSaida,Descricao,StatusOrdemServicoId,VeiculoId")] OrdemServico ordemServico, string servicoSelected, string pecaSelected, string pecasQtd)
         {
             if (id != ordemServico.Id)
             {
@@ -133,33 +133,74 @@ namespace CentroAutomotivo.Controllers
 
             if (ModelState.IsValid)
             {
+                #region Adicionar Serviço
                 ordemServico.ServicosOrdem = new List<ServicoOrdem>();
 
-                if (servicoSelected.Length > 1)
+                if (servicoSelected is not null)
                 {
-                    var servicos = servicoSelected.Split(",");
+                    if (servicoSelected.Length > 1)
+                    {
+                        var servicos = servicoSelected.Split(",");
 
-                    foreach (var servico in servicos)
+                        foreach (var servico in servicos)
+                        {
+                            _context.Add(
+                                new ServicoOrdem
+                                {
+                                    OrdemServicoId = ordemServico.Id,
+                                    ServicoId = int.Parse(servico)
+                                }
+                            );
+                        }
+                    }
+                    else if (servicoSelected.Length == 1)
                     {
                         _context.Add(
                             new ServicoOrdem
                             {
                                 OrdemServicoId = ordemServico.Id,
-                                ServicoId = int.Parse(servico)
+                                ServicoId = int.Parse(servicoSelected)
                             }
                         );
                     }
                 }
-                else if (servicoSelected.Length == 1)
+                #endregion
+
+                #region Adicionar Peça
+                ordemServico.PecasOrdem = new List<PecaOrdem>();
+
+                if (pecaSelected is not null)
                 {
-                    _context.Add(
-                        new ServicoOrdem
+                    if (pecaSelected.Length > 1)
+                    {
+                        var pecas = pecaSelected.Split(",");
+                        var qtds = pecasQtd.Split(",");
+
+                        for (int i = 0; i < pecas.Count(); i++)
                         {
-                            OrdemServicoId = ordemServico.Id,
-                            ServicoId = int.Parse(servicoSelected)
+                            _context.Add(
+                                new PecaOrdem
+                                {
+                                    OrdemServicoId = ordemServico.Id,
+                                    PecaId = int.Parse(pecas[i]),
+                                    Quantidade = int.Parse(qtds[i])
+                                }
+                            );
                         }
-                    );
+                    }
+                    else if (pecaSelected.Length == 1)
+                    {
+                        _context.Add(
+                            new PecaOrdem
+                            {
+                                OrdemServicoId = ordemServico.Id,
+                                PecaId = int.Parse(pecaSelected),
+                                Quantidade = int.Parse(pecasQtd)
+                            }
+                        );
+                    }
                 }
+                #endregion
 
 
                 try
@@ -207,7 +248,7 @@ namespace CentroAutomotivo.Controllers
                 return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
             }
 
-            return Json( new { success = true, message = "Ordem de Serviço excluída com sucesso!"});
+            return Json(new { success = true, message = "Ordem de Serviço excluída com sucesso!" });
         }
 
         public IActionResult SelecionarUsuario()
