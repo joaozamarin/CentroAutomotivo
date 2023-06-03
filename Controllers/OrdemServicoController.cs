@@ -286,6 +286,14 @@ namespace CentroAutomotivo.Controllers
             return Json(servicosOrdem);
         }
 
+        [HttpGet]
+        public JsonResult GetPecasOrdem(int id)
+        {
+            var pecasOrdem = _context.PecasOrdem.Where(s => s.OrdemServicoId == id).ToList();
+
+            return Json(pecasOrdem);
+        }
+
         private bool OrdemServicoExists(int id)
         {
             return _context.OrdensServico.Any(e => e.Id == id);
