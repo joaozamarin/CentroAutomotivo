@@ -21,16 +21,24 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="form-group col-4">
+                <div class="form-group col-3">
                     <label asp-for="Placa" class="control-label"></label>
                     <input asp-for="Placa" class="form-control" placeholder="ABC-9999" />
                     <span asp-validation-for="Placa" class="text-danger"></span>
                 </div>
-                <div class="form-group col-5">
+                <div class="form-group col-4">
                     <label asp-for="ModeloId" class="control-label"></label>
-                    <select asp-for="ModeloId" class="form-control custom-select" asp-items="ViewBag.ModeloId">
+                    <select id="modelo" asp-for="ModeloId" class="form-control custom-select" asp-items="ViewBag.ModeloId">
                         <option selected disabled>Selecione...</option>
                     </select>
+                </div>
+                <div id="modeloAno" class="form-group col-2" style="display: none;">
+                    <label class="control-label">Ano</label>
+                    <input readonly id="ano" class="form-control" />
+                </div>
+                <div id="modeloMarca" class="form-group col-3" style="display: none;">
+                    <label class="control-label">Marca</label>
+                    <input readonly id="marca" class="form-control" />
                 </div>
             </div>
             <div class="form-group mt-5">
@@ -94,6 +102,22 @@
 
         $('#PreviewImage').click(() => {
             $('#input').click();
+        })
+
+        $('#modelo').change(() => {
+            let modeloId = document.getElementById('modelo').value;
+
+            $.ajax({
+                url: '/Modelo/ObterModelo/' + modeloId,
+                dataType: 'json',
+                success: function (response) {
+                    document.getElementById('ano').value = response['ano'];
+                    document.getElementById('marca').value = response['marca']['nome'];
+
+                    $('#modeloAno').show();
+                    $('#modeloMarca').show();
+                }
+            });
         })
     </script>
 }

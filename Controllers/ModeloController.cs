@@ -183,6 +183,15 @@ namespace CentroAutomotivo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ObterModelo(int id)
+        {
+            var modelo = await _context.Modelos.Include(m => m.Marca).FirstOrDefaultAsync(m => m.Id == id);
+            modelo.Marca.Modelos = null;
+
+            return Json(modelo);
+        }
+
         private bool ModeloExists(int id)
         {
             return _context.Modelos.Any(e => e.Id == id);
