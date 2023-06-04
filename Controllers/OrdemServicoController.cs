@@ -144,13 +144,18 @@ namespace CentroAutomotivo.Controllers
 
                         foreach (var servico in servicos)
                         {
-                            _context.Add(
+                            var so = _context.ServicosOrdem.AsNoTracking().Any(s => s.ServicoId == int.Parse(servico) && s.OrdemServicoId == ordemServico.Id);
+
+                            if (!so)
+                            {
+                                _context.Add(
                                 new ServicoOrdem
                                 {
                                     OrdemServicoId = ordemServico.Id,
                                     ServicoId = int.Parse(servico)
                                 }
                             );
+                            }
                         }
                     }
                     else if (servicoSelected.Length == 1)
@@ -178,14 +183,19 @@ namespace CentroAutomotivo.Controllers
 
                         for (int i = 0; i < pecas.Count(); i++)
                         {
-                            _context.Add(
-                                new PecaOrdem
-                                {
-                                    OrdemServicoId = ordemServico.Id,
-                                    PecaId = int.Parse(pecas[i]),
-                                    Quantidade = int.Parse(qtds[i])
-                                }
-                            );
+                            var po = _context.PecasOrdem.AsNoTracking().Any(p => p.PecaId == int.Parse(pecas[i]) && p.OrdemServicoId == ordemServico.Id);
+
+                            if (!po)
+                            {
+                                _context.Add(
+                                    new PecaOrdem
+                                    {
+                                        OrdemServicoId = ordemServico.Id,
+                                        PecaId = int.Parse(pecas[i]),
+                                        Quantidade = int.Parse(qtds[i])
+                                    }
+                                );
+                            }
                         }
                     }
                     else if (pecaSelected.Length == 1)

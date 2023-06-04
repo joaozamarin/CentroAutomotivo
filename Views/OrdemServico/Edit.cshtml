@@ -324,7 +324,7 @@
                 success: function (response) {
                     var row =
                     `<tr id='${servico}servico''>
-                        <td> ${response.nome} </td>
+                        <td> * ${response.nome} </td>
                         <td> R$ ${response.preco},00 </td>
                         <td class="d-flex justify-content-center">
                             <a onclick='removerServico(${servico})' title="Excluir" class="text-danger" style="cursor: pointer;">
@@ -411,7 +411,7 @@
 
                         var row =
                         `<tr id='${peca}peca''>
-                            <td> ${response.nome} </td>
+                            <td> * ${response.nome} </td>
                             <td> ${qtd} </td>
                             <td> R$ ${response.preco * qtd},00 </td>
                             <td class="d-flex justify-content-center">
