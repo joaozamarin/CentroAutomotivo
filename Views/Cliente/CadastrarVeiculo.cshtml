@@ -1,0 +1,99 @@
+@model CentroAutomotivo.Models.Veiculo
+@{
+    ViewData["Title"] = "Cadastrar Veículo";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+<form asp-action="CadastrarVeiculo" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="Nome" class="control-label"></label>
+                    <input asp-for="Nome" class="form-control" placeholder="Nome" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="AppUserId" class="control-label"></label>
+                    <input readonly asp-for="AppUser.Nome" class="form-control" placeholder="Nome" />
+                    <input hidden asp-for="AppUserId" class="form-control" placeholder="Nome" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="form-group col-4">
+                    <label asp-for="Placa" class="control-label"></label>
+                    <input asp-for="Placa" class="form-control" placeholder="ABC-9999" />
+                    <span asp-validation-for="Placa" class="text-danger"></span>
+                </div>
+                <div class="form-group col-5">
+                    <label asp-for="ModeloId" class="control-label"></label>
+                    <select asp-for="ModeloId" class="form-control custom-select" asp-items="ViewBag.ModeloId">
+                        <option selected disabled>Selecione...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group mt-5">
+                <input type="submit" value="Salvar" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="row d-flex flex-column align-items-center">
+                <div class="form-group col-12 custom">
+                    <label asp-for="Imagem" class="control-label"></label>
+                    <div id="uploadImg">
+                        <div class="d-flex align-items-center justify-content-center"
+                            style="width: 475px; height: 375px; border-radius: 10px; cursor: pointer; background: #F2F2F2;">
+                            <div class="d-flex align-items-center justify-content-center"
+                                style="width: 200px; height: 200px; border-radius: 50%;background: #E4E4E4">
+                                <div class="text-center d-flex flex-column align-items-center justify-content-center"
+                                    style="font-size: 20px; font-weight: 500;">
+                                    Fazer Upload
+                                    <svg class="mt-2" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <rect width="24" height="24" fill="url(#pattern0)" />
+                                        <defs>
+                                            <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1"
+                                                height="1">
+                                                <use xlink:href="#image0_1172_58" transform="scale(0.0416667)" />
+                                            </pattern>
+                                            <image id="image0_1172_58" width="24" height="24"
+                                                xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYEAQAAAAa7ikwAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAAAGAAAABgAPBrQs8AAAAHdElNRQfmBgoBEQJQIW/wAAABS0lEQVRIx2NgGFEgIOn8+YCk8+dJ0cNEtOF9/f0M7wwMGN4ZGAT09fdT1+UfOjoCAv7/DxB8/Djg+MOHAQH//0MsYWQkpJeZGMMZEsrLGewmTGCQZmNjuPT+/X/3FSsYt5eUaKTx89/YuWsX5S6HBklA1v79AVn79zMwMDD4L2lvJ8UnGCDQpa4O2XB0C2DxEhDw/7//vdpaXOaw4JL4v+H79/+v6uo2KjU341Kzoaiw0P/eu3eMYj9+kB1MKEGG5gNiANHJlFwwagHxFgRKp6YGSqemUmogujlwC/77R0X994+KotQCdHNoHkQsJKkOu3aNgYGBgWEajSzY4JCdTbYPGA/y8VEjSNDNgVvwX56fn8FDXj6w89Sp/ys/fiTL8HB+/n9JenqMex8+ZLgKEYNHMuNDX1+GHQ8fUuyDvQ8fMj709aVGaAwOAABQsYkBB/BMLAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wNi0xMFQwMToxNzowMiswMDowMFHtYzcAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDYtMTBUMDE6MTc6MDIrMDA6MDAgsNuLAAAAAElFTkSuQmCC" />
+                                        </defs>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="input" hidden type="file" asp-for="Imagem" class="form-control"
+                        accept=".jpg,.jpeg,.png,.gif,.jfif" />
+                </div>
+            </div>
+            <img src="" class="img-fluid border" id="PreviewImage" style="display: none; width: 100%; border-radius: 10px; cursor: pointer;" />
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        window.addEventListener('load', function () {
+            document.querySelector('input[type="file"]').addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    var img = document.getElementById('PreviewImage');
+                    img.src = URL.createObjectURL(this.files[0]);
+                    $('#PreviewImage').show();
+                    $('#uploadImg').hide();
+                }
+            });
+        });
+
+        $('#uploadImg').click(() => {
+            $('#input').click();
+        })
+
+        $('#PreviewImage').click(() => {
+            $('#input').click();
+        })
+    </script>
+}
