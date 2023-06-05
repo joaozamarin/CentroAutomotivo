@@ -4,14 +4,14 @@
     Layout = "~/Views/Shared/_LayoutCliente.cshtml";
 }
 
-<div class="section-header" style="padding-bottom: 20px;">
+<div class="section-header" style="padding-bottom: 15px;">
     <h2 class="">Meus Veículos</h2>
 </div>
 
-<div class="row">
+<div class="row d-flex align-items-center justify-content-center">
     @foreach (var veiculo in Model)
     {
-        <div class="col-6">
+        <div class="col-5 mt-3">
             <div class="card" onclick="GetVeiculo(@veiculo.Id)">
                 <img src="@veiculo.Imagem" class="card-img-top" style="height: 300px; width: 100%; max-height: 300px; max-width: 100%;" alt="...">
                 <div class="card-body">
