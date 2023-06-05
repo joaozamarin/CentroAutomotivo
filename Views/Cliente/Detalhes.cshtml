@@ -7,3 +7,110 @@
 <div class="section-header" style="padding-bottom: 20px;">
     <h2 class="">Detalhes</h2>
 </div>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="row">
+            <div class="form-group col-6">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" readonly class="form-control" placeholder="Nome" />
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="AppUserId" class="control-label"></label>
+                <input readonly asp-for="AppUser.Nome" class="form-control" placeholder="Nome" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="form-group col-3">
+                <label asp-for="Placa" class="control-label"></label>
+                <input asp-for="Placa" readonly class="form-control" />
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="ModeloId" class="control-label"></label>
+                <input asp-for="Modelo.Nome" readonly class="form-control" />
+            </div>
+            <div class="form-group col-2">
+                <label asp-for="Modelo.Ano" class="control-label"></label>
+                <input asp-for="Modelo.Ano" readonly class="form-control" />
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="Modelo.MarcaId" class="control-label"></label>
+                <input asp-for="Modelo.Marca.Nome" readonly class="form-control" />
+            </div>
+        </div>
+        <div class="form-group mt-5">
+            <a asp-action="MeusVeiculos" class="btn btn-sm text-white" style="background: #07B0F2;">Voltar</a>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="row d-flex flex-column align-items-center">
+            <div class="form-group col-12 custom">
+                <label asp-for="Imagem" class="control-label"></label>
+            </div>
+        </div>
+        @{
+            if (Model.Imagem is not null)
+            {
+                <img src="@Model.Imagem" class="img-fluid border" id="PreviewImage"
+                style="width: 100%; border-radius: 10px; cursor: pointer;" />
+            }
+            else
+            {
+                <h4 class="text-center text-danger mt-4">Não há imagem cadastrada para esse Veículo</h4>
+            }
+        }
+    </div>
+</div>
+
+<hr>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <h3>Ordens de Serviço</h3>
+
+        @{
+            if (Model.OrdensServico.Count == 0)
+            {
+                <h5 class="text-center text-danger">Não há Ordens de Serviço para esse Veículo</h5>
+            }
+            else
+            {
+                <div id="accordion">
+                    @foreach (var ordem in Model.OrdensServico)
+                    {
+                        <div class="card mt-2">
+                            <div class="card-header" id="headingTwo">
+                                <div class="collapsed d-flex align-items-center justify-content-between" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+                            style="cursor: pointer;">
+                                    <h5>
+                                        Veículo
+                                    </h5>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                    d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            asdasdsad
+                                        </div>
+                                        <div class="col-lg-5">
+                                            asdsadasda
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+
+</div>

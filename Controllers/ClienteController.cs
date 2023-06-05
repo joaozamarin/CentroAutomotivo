@@ -92,7 +92,14 @@ namespace CentroAutomotivo.Controllers
 
         public async Task<IActionResult> Detalhes([FromQuery] int veiculoId)
         {
-            var veiculo = await _context.Veiculos.FirstOrDefaultAsync(v => v.Id == veiculoId);
+            var veiculo = await _context.Veiculos.Include(v => v.Modelo)
+                                                    .ThenInclude(m => m.Marca)
+                                                 .Include(v => v.OrdensServico)
+                                                    .ThenInclude(o => o.PecasOrdem)
+                                                 .Include(v => v.OrdensServico)
+                                                    .ThenInclude(o => o.ServicosOrdem)
+                                                 .Include(v => v.AppUser)
+                                                 .FirstOrDefaultAsync(v => v.Id == veiculoId);
 
             return View(veiculo);
         }
