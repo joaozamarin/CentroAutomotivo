@@ -76,7 +76,7 @@
             else
             {
                 <div id="accordion">
-                    @foreach (var ordem in Model.OrdensServico.Where(o => o.StatusOrdemServico.Nome == "Concluído").ToList())
+                    @foreach (var ordem in Model.OrdensServico.Where(o => o.StatusOrdemServico.Nome == "Concluído").OrderByDescending(o => o.DataEntrada).ToList())
                     {
                         var collapsed = $"collapsed{ordem.Id}";
                         var date = ordem.DataEntrada.ToShortDateString();
