@@ -139,11 +139,12 @@
                                 <tbody>
                                     @foreach (var peca in Model.PecasOrdem)
                                     {
+                                        var preco = peca.Quantidade * peca.Peca.Preco;
                                         var id = $"{peca.PecaId}peca";
                                         <tr id="@id">
                                             <td>@peca.Peca.Nome</td>
                                             <td>@peca.Quantidade</td>
-                                            <td>R$ @peca.Peca.Preco</td>
+                                            <td>R$ @preco</td>
                                             <td class="d-flex justify-content-center">
                                                 <a onclick='removerPeca(@peca.PecaId)' title="Excluir" class="text-danger" style="cursor: pointer;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#de2935" class="bi bi-trash-fill"

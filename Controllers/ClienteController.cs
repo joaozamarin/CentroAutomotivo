@@ -96,8 +96,12 @@ namespace CentroAutomotivo.Controllers
                                                     .ThenInclude(m => m.Marca)
                                                  .Include(v => v.OrdensServico)
                                                     .ThenInclude(o => o.PecasOrdem)
+                                                        .ThenInclude(p => p.Peca)
                                                  .Include(v => v.OrdensServico)
                                                     .ThenInclude(o => o.ServicosOrdem)
+                                                        .ThenInclude(s => s.Servico)
+                                                 .Include(v => v.OrdensServico)
+                                                    .ThenInclude(o => o.StatusOrdemServico)
                                                  .Include(v => v.AppUser)
                                                  .FirstOrDefaultAsync(v => v.Id == veiculoId);
 
