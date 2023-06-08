@@ -28,7 +28,17 @@ namespace CentroAutomotivo.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var user = _userManager.GetUserAsync(User).Result;
+
+            var os = _context.OrdensServico.Include(o => o.StatusOrdemServico)
+                                           .Include(o => o.Veiculo)
+                                           .OrderByDescending(o => o.DataEntrada)
+                                           .FirstOrDefault(o => o.StatusOrdemServico.Nome != "Concluído" && o.Veiculo.AppUserId == user.Id);
+            
+            if (os is not null)
+                return View(os.Id);
+            
+            return View(0);
         }
 
         public async Task<IActionResult> CadastrarVeiculo()
@@ -106,6 +116,28 @@ namespace CentroAutomotivo.Controllers
                                                  .FirstOrDefaultAsync(v => v.Id == veiculoId);
 
             return View(veiculo);
+        }
+
+        public async Task<IActionResult> StatusServico(int id)
+        {
+            var user = _userManager.GetUserAsync(User).Result;
+
+            var os = await _context.OrdensServico.Include(o => o.StatusOrdemServico)
+                                                 .Include(o => o.Veiculo)
+                                                    .ThenInclude(v => v.AppUser)
+                                                 .Include(o => o.Veiculo)
+                                                    .ThenInclude(v => v.Modelo)
+                                                        .ThenInclude(m => m.Marca)
+                                                 .Include(o => o.ServicosOrdem)
+                                                    .ThenInclude(s => s.Servico)
+                                                 .Include(o => o.PecasOrdem)
+                                                    .ThenInclude(p => p.Peca)
+                                                 .FirstOrDefaultAsync(o => o.Id == id && o.Veiculo.AppUserId == user.Id);
+            
+            if (os is not null)
+                return View(os);
+            
+            return NotFound();
         }
     }
 }

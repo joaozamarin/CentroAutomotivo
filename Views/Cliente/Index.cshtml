@@ -1,3 +1,4 @@
+@model int;
 @{
     ViewData["Title"] = "Área do Cliente";
     Layout = "~/Views/Shared/_LayoutCliente.cshtml";
@@ -80,7 +81,7 @@
 
 <div class="row justify-content-center">
     <div class="col-sm-4">
-        <div class="card mb-3" style="max-width: 540px;" onclick="GetLink('StatusServico')">
+        <div class="card mb-3" style="max-width: 540px;" onclick="GetLinkStatus(@Model)">
             <div class="row no-gutters">
                 <div class="col-md-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="95%" height="95%" fill="#07B0F2"
@@ -159,6 +160,14 @@
     <script>
         function GetLink(action) {
             window.location = `Cliente/${action}`;
+        }
+
+        function GetLinkStatus(id) {
+            if (id != 0) {
+                window.location = `Cliente/StatusServico/${id}`;
+            } else {
+                alert('Não há Ordem de Serviço Em Andamento ou Aguardando Manutenção no momento');
+            }
         }
     </script>
 }

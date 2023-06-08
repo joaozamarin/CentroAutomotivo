@@ -1,0 +1,129 @@
+@model CentroAutomotivo.Models.OrdemServico
+@{
+    ViewData["Title"] = "Status do Serviço";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+<div class="section-header" style="padding-bottom: 20px;">
+    <h2 class="">Status do Serviço</h2>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <h3 style="color: #07B0F2;">Informações do Veículo</h3>
+
+        <div class="mt-3">
+            <h4>Proprietário</h4>
+            <h5 style="font-weight: 400;">&nbsp;&nbsp;&nbsp;@Model.Veiculo.AppUser.Nome</h5>
+        </div>
+        <div class="mt-3">
+            <h4>Veículo</h4>
+            <h5 style="font-weight: 400;">&nbsp;&nbsp;&nbsp;@Model.Veiculo.Modelo.Nome - @Model.Veiculo.Modelo.Marca.Nome / @Model.Veiculo.Modelo.Ano</h5>
+        </div>
+        <div class="mt-3">
+            <h4>Placa</h4>
+            <h5 style="font-weight: 400;">&nbsp;&nbsp;&nbsp;@Model.Veiculo.Placa.ToUpper()</h5>
+        </div>
+        <div class="mt-3">
+            <h4>Descrição</h4>
+            <h5 style="font-weight: 400;">&nbsp;&nbsp;&nbsp;@Model.Descricao</h5>
+        </div>
+    </div>
+    <div class="col-6 d-flex flex-column justify-content-center">
+        <h5 style="font-weight: bold; color: @Model.StatusOrdemServico.Cor;">@Model.StatusOrdemServico.Nome</h5>
+        @{
+            var width = "";
+
+            if (Model.StatusOrdemServico.Nome == "Aguardando Manutenção")
+                width = "25%";
+            
+            if (Model.StatusOrdemServico.Nome == "Em Andamento")
+                width = "50%";
+            
+            if (Model.StatusOrdemServico.Nome == "Concluído")
+                width = "100%";
+        }
+        <div class="progress" style="height: 30px;">
+          <div class="progress-bar" role="progressbar" style="width: @width; background-color: @Model.StatusOrdemServico.Cor;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col d-flex justify-content-end">
+        @{
+            var detalhes = "disabled";
+
+            if (Model.StatusOrdemServico.Nome == "Concluído")
+                detalhes = "";
+        }
+        <button class="btn text-white" style="background: #07B0F2;" data-toggle="modal" data-target="#exampleModal" @detalhes>Detalhes</button>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-end">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Serviços</h5>
+        <div class="row">
+            <div class="col-8">
+                @foreach (var servico in Model.ServicosOrdem)
+                {
+                    <h6 style="font-weight: 400;">&nbsp;&nbsp;&nbsp;@servico.Servico.Nome</h6>
+                }
+            </div>
+            <div class="col-4 d-flex flex-column align-items-end">
+                @foreach (var servico in Model.ServicosOrdem)
+                {
+                    <h6 style="font-weight: 400;">&nbsp;&nbsp;&nbsp;R$ @servico.Servico.Preco</h6>
+                }
+            </div>
+        </div>
+
+        <h5 class="mt-3">Peças</h5>
+        <div class="row">
+            <div class="col-8">
+                @foreach (var peca in Model.PecasOrdem)
+                {
+                    <h6 style="font-weight: 400;">&nbsp;&nbsp;&nbsp;@peca.Peca.Nome (@peca.Quantidade u)</h6>
+                }
+            </div>
+            <div class="col-4 d-flex flex-column align-items-end">
+                @foreach (var peca in Model.PecasOrdem)
+                {
+                    var preco = peca.Quantidade * peca.Peca.Preco;
+                    <h6 style="font-weight: 400;">&nbsp;&nbsp;&nbsp;R$ @preco</h6>
+                }
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            @{
+                decimal total = 0;
+
+                foreach (var servico in Model.ServicosOrdem)
+                {
+                    total += servico.Servico.Preco;
+                }
+
+                foreach (var peca in Model.PecasOrdem)
+                {
+                    total += peca.Quantidade * peca.Peca.Preco;
+                }
+            }
+            <div class="col-8">
+                <h4>Valor Total</h4>
+            </div>
+            <div class="col-4 d-flex flex-column align-items-end">
+                <h5 style="font-weight: 400;">&nbsp;&nbsp;&nbsp;R$ @total</h5>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
