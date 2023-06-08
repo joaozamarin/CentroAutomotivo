@@ -183,6 +183,7 @@
                                                         @foreach (var peca in ordem.PecasOrdem)
                                                         {
                                                             var preco = peca.Peca.Preco * peca.Quantidade;
+
                                                             <tr>
                                                                 <td>
                                                                     @peca.Peca.Nome
@@ -200,6 +201,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @{
+                                        decimal total = 0;
+
+                                        foreach (var peca in ordem.PecasOrdem)
+                                        {
+                                            total += peca.Quantidade * peca.Peca.Preco;
+                                        }
+
+                                        foreach (var servico in ordem.ServicosOrdem)
+                                        {
+                                            total += servico.Servico.Preco;
+                                        }
+
+                                        <h4 class="text-center" style="color: #07B0F2; font-weight: bold;">Total: R$ @total</h4>
+                                    }
                                 </div>
                             </div>
                         </div>
