@@ -139,5 +139,19 @@ namespace CentroAutomotivo.Controllers
             
             return NotFound();
         }
+
+        public async Task<IActionResult> Historico(int id)
+        {
+            var user = _userManager.GetUserAsync(User).Result;
+
+            var OrdemServico = await _context.OrdensServico.Include(os => os.StatusOrdemServico)
+                                                           .Include(os => os.Veiculo)
+                                                                .ThenInclude(v => v.AppUser)
+                                                           .Where(os => os.Veiculo.AppUserId == user.Id)
+                                                           .OrderByDescending(os => os.DataEntrada)
+                                                           .ToListAsync();
+
+            return View(OrdemServico);
+        }
     }
 }

@@ -1,0 +1,89 @@
+@model IEnumerable<CentroAutomotivo.Models.OrdemServico>
+@{
+    ViewData["Title"] = "Status do Serviço";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+<div class="section-header" style="padding-bottom: 20px;">
+    <h2 class="">Meu Histórico</h2>
+</div>
+
+<div class="card p-3" style="border: 3px solid #07B0F2; background: #EDEDED; border-radius: 20px;">
+    <table id="historico" class="table hover" style="width: 100%;">
+        <thead>
+            <tr>
+                <th class="w-70">
+                    @Html.DisplayNameFor(model => model.Veiculo.AppUserId)
+                </th>
+                <th class="w-70">
+                    @Html.DisplayNameFor(model => model.Veiculo)
+                </th>
+                <th class="w-70">
+                    @Html.DisplayNameFor(model => model.DataEntrada)
+                </th>
+                <th class="w-70">
+                    @Html.DisplayNameFor(model => model.DataSaida)
+                </th>
+                <th class="w-70">
+                    @Html.DisplayNameFor(model => model.StatusOrdemServicoId)
+                </th>
+                <th class="w-30">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Veiculo.AppUser.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Veiculo.Nome)
+                    </td>
+                    <td>
+                        @item.DataEntrada.ToString("dd/MM/yyyy HH:mm")
+                    </td>
+                    @if (item.StatusOrdemServico.Nome == "Concluído")
+                    {
+                        <td>
+                            @item.DataSaida.ToString("dd/MM/yyyy HH:mm")
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            N / D
+                        </td>
+                    }
+                    <td class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="@item.StatusOrdemServico.Cor"
+                            class="bi bi-circle-fill mr-2" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8" />
+                        </svg>
+                        &nbsp;@item.StatusOrdemServico.Nome
+                    </td>
+                    <td>
+                        <a asp-action="StatusServico" asp-route-id="@item.Id" title="Detalhes" class="text-secondary" style="margin-left: 15px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#07B0F2" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#historico').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+                }
+            });
+        });
+    </script>
+}
