@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="form-group col-4">
                     <label asp-for="Placa" class="control-label"></label>
-                    <input asp-for="Placa" class="form-control" placeholder="ABC-9999" />
+                    <input id="placa" asp-for="Placa" class="form-control" placeholder="ABC-9999" />
                     <span asp-validation-for="Placa" class="text-danger"></span>
                 </div>
                 <div class="form-group col-5">
@@ -57,14 +57,18 @@
 </form>
 
 @section Scripts{
-<script>
-    window.addEventListener('load', function () {
-        document.querySelector('input[type="file"]').addEventListener('change', function () {
-            if (this.files && this.files[0]) {
-                var img = document.getElementById('PreviewImage');
-                img.src = URL.createObjectURL(this.files[0]);
-            }
+    <script>
+        window.addEventListener('load', function () {
+            document.querySelector('input[type="file"]').addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    var img = document.getElementById('PreviewImage');
+                    img.src = URL.createObjectURL(this.files[0]);
+                }
+            });
         });
-    });
-</script>
+
+        $(document).ready(function () {
+            $("#placa").inputmask('AAA-9#99');
+        });
+    </script>
 }
