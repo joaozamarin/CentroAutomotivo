@@ -8,6 +8,14 @@
     <h2 class="">Meus Veículos</h2>
 </div>
 
+@if (Model.Count() == 0)
+{
+    <div class="d-flex flex-column align-items-center justify-content-center">
+        <h2 class="text-center text-danger mt-2">Você não possui Veículo cadastrado!</h2>
+        <a class="btn text-white mt-1" asp-action="CadastrarVeiculo" style="background: #07B0F2;">Cadastrar</a>
+    </div>
+}
+
 <div class="row d-flex align-items-center justify-content-center">
     @foreach (var veiculo in Model)
     {

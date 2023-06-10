@@ -69,9 +69,9 @@
         <h3>Ordens de Serviço</h3>
 
         @{
-            if (Model.OrdensServico.Count == 0)
+            if (Model.OrdensServico.Where(o => o.StatusOrdemServico.Nome == "Concluído").Count() == 0)
             {
-                <h5 class="text-center text-danger">Não há Ordens de Serviço para esse Veículo</h5>
+                <h5 class="text-center text-danger">Não há Ordens de Serviço concluídas para esse Veículo</h5>
             }
             else
             {
