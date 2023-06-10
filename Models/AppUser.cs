@@ -11,6 +11,10 @@ namespace CentroAutomotivo.Models
 
         [StringLength(400)]
         public string FotoPerfil { get; set; }
+
+        [Required]
+        [StringLength(14, MinimumLength = 14)]
+        public string CPF { get; set; }
         
         [Required]
         public bool IsAdmin { get; set; } = false;

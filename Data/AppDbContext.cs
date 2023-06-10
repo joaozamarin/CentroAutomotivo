@@ -90,7 +90,8 @@ namespace CentroAutomotivo.Data
                     PasswordHash = hash.HashPassword(null, "admin"),
                     SecurityStamp = hash.GetHashCode().ToString(),
                     FotoPerfil = @"\avatars\01.png",
-                    IsAdmin = true
+                    IsAdmin = true,
+                    CPF = "281.372.540-48"
                 }
             );
 
@@ -119,7 +120,8 @@ namespace CentroAutomotivo.Data
                     PasswordHash = hashCliente.HashPassword(null, "cliente"),
                     SecurityStamp = hashCliente.GetHashCode().ToString(),
                     FotoPerfil = @"\avatars\06.png",
-                    IsAdmin = false
+                    IsAdmin = false,
+                    CPF = "538.229.810-60"
                 }
             );
 

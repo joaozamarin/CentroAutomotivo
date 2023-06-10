@@ -58,6 +58,11 @@
                       <span class="col-12 text-danger text-xs pt-1" asp-validation-for="Input.Nome"></span>
                     </div>
                     <div class="input-group input-group-outline mb-3">
+                      <label class="form-label" asp-for="Input.CPF"></label>
+                      <input id="CPF" class="form-control" asp-for="Input.CPF">
+                      <span class="col-12 text-danger text-xs pt-1" asp-validation-for="Input.CPF"></span>
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
                       <label class="form-label" asp-for="Input.Email"></label>
                       <input class="form-control" asp-for="Input.Email">
                       <span class="col-12 text-danger text-xs pt-1" asp-validation-for="Input.Email"></span>
@@ -112,6 +117,14 @@
     integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw=="
     data-cf-beacon='{"rayId":"7bb8e53f5cbc00ee","version":"2023.3.0","r":1,"token":"1b7cbb72744b40c580f8633c6b62637e","si":100}'
     crossorigin="anonymous"></script>
+  <!-- Mask -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://rawgit.com/RobinHerbots/Inputmask/5.x/dist/jquery.inputmask.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#CPF").inputmask('999.999.999-99');
+    });
+  </script>
   <partial name="_ValidationScriptsPartial" />
 </body>
 

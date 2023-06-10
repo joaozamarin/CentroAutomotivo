@@ -74,6 +74,11 @@ namespace CentroAutomotivo.Areas.Identity.Pages.Account
             [Required (ErrorMessage = "Informe seu Nome")]
             [Display(Name = "Nome")]
             public string Nome { get; set; }
+
+            [Required(ErrorMessage = "Informe seu CPF")]
+            [Display(Name = "CPF")]
+            [StringLength(14, MinimumLength = 14, ErrorMessage = "Informe seu CPF")]
+            public string CPF { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -118,6 +123,7 @@ namespace CentroAutomotivo.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 user.Nome = Input.Nome;
+                user.CPF = Input.CPF;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
