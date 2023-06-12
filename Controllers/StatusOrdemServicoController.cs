@@ -22,7 +22,7 @@ namespace CentroAutomotivo.Controllers
         // GET: StatusOrdemServico
         public async Task<IActionResult> Index()
         {
-            return View(await _context.StatusOrdensServico.ToListAsync());
+            return View(await _context.StatusOrdensServico.Include(s => s.TipoStatus).ToListAsync());
         }
 
         // GET: StatusOrdemServico/Details/5
@@ -34,6 +34,7 @@ namespace CentroAutomotivo.Controllers
             }
 
             var statusOrdemServico = await _context.StatusOrdensServico
+                .Include(s => s.TipoStatus)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (statusOrdemServico == null)
             {
@@ -46,6 +47,7 @@ namespace CentroAutomotivo.Controllers
         // GET: StatusOrdemServico/Create
         public IActionResult Create()
         {
+            ViewData["TipoStatusId"] = new SelectList(_context.TipoStatuses, "Id", "Nome");
             return View();
         }
 
@@ -54,7 +56,7 @@ namespace CentroAutomotivo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Cor")] StatusOrdemServico statusOrdemServico)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Cor,TipoStatusId")] StatusOrdemServico statusOrdemServico)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +64,8 @@ namespace CentroAutomotivo.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TipoStatusId"] = new SelectList(_context.TipoStatuses, "Id", "Nome");
+
             return View(statusOrdemServico);
         }
 
@@ -78,6 +82,8 @@ namespace CentroAutomotivo.Controllers
             {
                 return NotFound();
             }
+            ViewData["TipoStatusId"] = new SelectList(_context.TipoStatuses, "Id", "Nome");
+
             return View(statusOrdemServico);
         }
 
@@ -86,7 +92,7 @@ namespace CentroAutomotivo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Cor")] StatusOrdemServico statusOrdemServico)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Cor,TipoStatusId")] StatusOrdemServico statusOrdemServico)
         {
             if (id != statusOrdemServico.Id)
             {
@@ -113,6 +119,8 @@ namespace CentroAutomotivo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TipoStatusId"] = new SelectList(_context.TipoStatuses, "Id", "Nome");
+            
             return View(statusOrdemServico);
         }
 
