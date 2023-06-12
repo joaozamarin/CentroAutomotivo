@@ -20,6 +20,10 @@ namespace CentroAutomotivo.Models
         [StringLength(7, MinimumLength = 7)]
         public string Cor { get; set; }
 
+        public int TipoStatusId { get; set; }
+        [ForeignKey("TipoStatusId")]
+        public TipoStatus TipoStatus { get; set; }
+
         public ICollection<OrdemServico> OrdensServico { get; set; }
     }
 }

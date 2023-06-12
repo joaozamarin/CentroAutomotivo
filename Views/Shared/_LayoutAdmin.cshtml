@@ -122,6 +122,15 @@
           </a>
         </li>
 
+        <li class="@(ViewBag.Title == "Tipos Status" || ViewBag.Title == "Adicionar Tipo Status" || ViewBag.Title == "Editar Tipo Status" || 
+                     ViewBag.Title == "Excluir Tipo Status" || ViewBag.Title == "Detalhes Tipo Status" ? "active" : "")">
+          <a asp-controller="TipoStatus" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
+            <span class="material-icons mr-2">
+              battery_5_bar
+            </span> <span>Tipo Status</span>
+          </a>
+        </li>
+
       </ul>
 
     </div>
