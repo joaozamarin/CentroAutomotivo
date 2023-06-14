@@ -133,6 +133,185 @@ namespace CentroAutomotivo.Data
                 }
             );
             #endregion
+
+            #region Seed Serviços
+            List<Servico> servicos = new()
+            {
+                new Servico
+                {
+                    Id = 1,
+                    Nome = "Trocar Pneu",
+                    Preco = 65.00M
+                },
+                new Servico
+                {
+                    Id = 2,
+                    Nome = "Trocar Vela",
+                    Preco = 30.00M
+                },
+                new Servico
+                {
+                    Id = 3,
+                    Nome = "Trocar Óleo do Motor",
+                    Preco = 150.00M
+                },
+                new Servico
+                {
+                    Id = 4,
+                    Nome = "Trocar Amortecedor",
+                    Preco = 350.00M
+                }
+            };
+            builder.Entity<Servico>().HasData(servicos);
+            #endregion
+
+            #region Seed Peças
+            List<Peca> pecas = new()
+            {
+                new Peca
+                {
+                    Id = 1,
+                    Nome = "Kit Amortecedor Cofap",
+                    Quantidade = 10,
+                    Preco = 800.00M
+                },
+                new Peca
+                {
+                    Id = 2,
+                    Nome = "Sensor de Temperatura",
+                    Quantidade = 15,
+                    Preco = 90.00M
+                },
+                new Peca
+                {
+                    Id = 3,
+                    Nome = "Pinça Freio",
+                    Quantidade = 10,
+                    Preco = 250.00M
+                },
+                new Peca
+                {
+                    Id = 4,
+                    Nome = "Correia Dentada",
+                    Quantidade = 15,
+                    Preco = 105.0M
+                },
+                new Peca
+                {
+                    Id = 5,
+                    Nome = "Kit 4 Buchas Bandeja",
+                    Quantidade = 10,
+                    Preco = 165.00M
+                },
+                new Peca
+                {
+                    Id = 6,
+                    Nome = "Vela de Ignição",
+                    Quantidade = 15,
+                    Preco = 100.00M
+                }
+            };
+            builder.Entity<Peca>().HasData(pecas);
+            #endregion
+
+            #region Seed Marcas
+            List<Marca> marcas = new()
+            {
+                new Marca
+                {
+                    Id = 1,
+                    Nome = "Chevrolet"
+                },
+                new Marca
+                {
+                    Id = 2,
+                    Nome = "Fiat"
+                },
+                new Marca
+                {
+                    Id = 3,
+                    Nome = "Volkswagen"
+                },
+                new Marca
+                {
+                    Id = 4,
+                    Nome = "Hyundai"
+                },
+                new Marca
+                {
+                    Id = 5,
+                    Nome = "Toyota"
+                }
+            };
+            builder.Entity<Marca>().HasData(marcas);
+            #endregion
+
+            #region Seed Modelos
+            List<Modelo> modelos = new()
+            {
+                new Modelo
+                {
+                    Id = 1,
+                    Nome = "Chevrolet Cruze LT",
+                    Ano = 2020,
+                    MarcaId = 1
+                },
+                new Modelo
+                {
+                    Id = 2,
+                    Nome = "Fiat Argo",
+                    Ano = 2017,
+                    MarcaId = 2
+                },
+                new Modelo
+                {
+                    Id = 3,
+                    Nome = "Volkswagen Jetta",
+                    Ano = 2021,
+                    MarcaId = 3
+                },
+                new Modelo
+                {
+                    Id = 4,
+                    Nome = "Hyundai HB20",
+                    Ano = 2012,
+                    MarcaId = 4
+                },
+                new Modelo
+                {
+                    Id = 5,
+                    Nome = "Corolla",
+                    Ano = 2020,
+                    MarcaId = 5
+                }
+            };
+            builder.Entity<Modelo>().HasData(modelos);
+            #endregion
+
+            #region Seed Status
+            List<StatusOrdemServico> status = new()
+            {
+                new StatusOrdemServico
+                {
+                    Id = 1,
+                    Nome = "Aguardando Manutenção",
+                    Cor = "#CA2222"
+                },
+                new StatusOrdemServico
+                {
+                    Id = 2,
+                    Nome = "Em Andamento",
+                    Cor = "#DDCB21"
+                },
+                new StatusOrdemServico
+                {
+                    Id = 3,
+                    Nome = "Concluído",
+                    Cor = "#26CE1D"
+                }
+            };
+            builder.Entity<StatusOrdemServico>().HasData(status);
+            #endregion
         }
     }
 }
