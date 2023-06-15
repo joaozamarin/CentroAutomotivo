@@ -35,10 +35,12 @@ namespace CentroAutomotivo.Models
         [Display(Name = "Precisa de Reboque?")]
         public bool Reboque { get; set; } = false;
 
+        [Display(Name = "Veículo")]
         public int VeiculoId { get; set; }
         [ForeignKey("VeiculoId")]
         public Veiculo Veiculo { get; set; }
 
+        [Display(Name = "Status")]
         public int StatusOrdemServicoId { get; set; }
         [ForeignKey("StatusOrdemServicoId")]
         public StatusOrdemServico StatusOrdemServico { get; set; }

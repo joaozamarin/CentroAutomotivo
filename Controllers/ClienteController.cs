@@ -153,5 +153,31 @@ namespace CentroAutomotivo.Controllers
 
             return View(OrdemServico);
         }
+
+        public IActionResult SolicitarAgendamento()
+        {
+            var user = _userManager.GetUserAsync(User).Result;
+
+            var agendamento = new Agendamento();
+
+            ViewData["VeiculoId"] = new SelectList(_context.Veiculos.AsNoTracking().Where(v => v.AppUserId == user.Id), "Id", "Nome");
+
+            return View(agendamento);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SolicitarAgendamento([Bind("Id,DataHora,Telefone,DescricaoProblema,Resposta,Reboque,VeiculoId,StatusOrdemServicoId")] Agendamento agendamento)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(agendamento);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome", agendamento.VeiculoId);
+            return View(agendamento);
+        }
     }
 }

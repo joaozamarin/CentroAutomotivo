@@ -70,6 +70,16 @@
           </a>
         </li>
 
+        <li class="@(ViewBag.Title == "Agendamentos" || ViewBag.Title == "Adicionar Ordem de Serviço" || ViewBag.Title == "Editar Ordem de Serviço" || 
+                     ViewBag.Title == "Excluir Ordem de Serviço" || ViewBag.Title == "Detalhes Ordem de Serviço" ||
+                     ViewBag.Title == "Selecionar Usuário" || ViewBag.Title == "Selecionar Veículo" ? "active" : "")">
+          <a asp-controller="Agendamento" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
+            <span class="material-symbols-outlined mr-2">
+              calendar_month
+            </span> <span>Agendamentos</span>
+          </a>
+        </li>
+
         <li class="@(ViewBag.Title == "Veículos" || ViewBag.Title == "Adicionar Veículo" || ViewBag.Title == "Editar Veículo" || 
                      ViewBag.Title == "Excluir Veículo" || ViewBag.Title == "Detalhes Veículo" ? "active" : "")">
           <a asp-controller="Veiculo" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
