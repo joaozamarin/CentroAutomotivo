@@ -1,61 +1,71 @@
 @model CentroAutomotivo.Models.Agendamento
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes Agendamento";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Agendamentos</h1>
+<h6>Detalhes</h6>
+<hr />
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="form-group col-2">
+                <label asp-for="DataHora" class="control-label"></label>
+                <input asp-for="DataHora" class="form-control" readonly />
+                <span asp-validation-for="DataHora" class="text-danger"></span>
+            </div>
+            <div class="form-group col-2">
+                <label asp-for="Telefone" class="control-label"></label>
+                <input asp-for="Telefone" class="form-control" readonly />
+                <span asp-validation-for="Telefone" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="Veiculo.AppUserId" class="control-label"></label>
+                <input asp-for="Veiculo.AppUser.Nome" class="form-control" readonly />
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="VeiculoId" class="control-label"></label>
+                <input asp-for="Veiculo.Nome" class="form-control" readonly />
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="StatusOrdemServicoId" class="control-label"></label>
+                <input asp-for="StatusOrdemServico.Nome" class="form-control" readonly />
+            </div>
+            <div class="form-group col-2">
+                <label asp-for="Reboque" class="control-label"></label>
+                @{
+                    string Reboque;
 
-<div>
-    <h4>Agendamento</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataHora)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataHora)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DescricaoProblema)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DescricaoProblema)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Resposta)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Resposta)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Reboque)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Reboque)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Veiculo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Veiculo.AppUserId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StatusOrdemServico)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StatusOrdemServico.Cor)
-        </dd>
-    </dl>
+                    switch (Model.Reboque)
+                    {
+                        case true:
+                            Reboque = "Sim";
+                        break;
+
+                        case false:
+                            Reboque = "Não";
+                        break;
+                    }
+                }
+                <input value="@Reboque" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="form-group col-6">
+                <label asp-for="DescricaoProblema" class="control-label"></label>
+                <textarea asp-for="DescricaoProblema" class="form-control" rows="3" readonly></textarea>
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="Resposta" class="control-label"></label>
+                <textarea asp-for="Resposta" class="form-control" rows="3" readonly></textarea>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="form-group mt-4">
+    <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.Id">Alterar</a>
+    <a asp-action="Index" class="btn btn-danger">Voltar</a>
 </div>

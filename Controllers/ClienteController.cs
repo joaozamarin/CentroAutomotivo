@@ -160,7 +160,8 @@ namespace CentroAutomotivo.Controllers
 
             var agendamento = new Agendamento();
 
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculos.AsNoTracking().Where(v => v.AppUserId == user.Id), "Id", "Nome");
+            ViewData["VeiculoId"] = new SelectList(_context.Veiculos.Where(v => v.AppUserId == user.Id), "Id", "Nome");
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Agendamento" && s.Nome == "Em Análise"), "Id", "Nome");
 
             return View(agendamento);
         }
@@ -177,6 +178,8 @@ namespace CentroAutomotivo.Controllers
             }
 
             ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome", agendamento.VeiculoId);
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Agendamento" && s.Nome == "Em Análise"), "Id", "Nome", agendamento.StatusOrdemServicoId);
+            
             return View(agendamento);
         }
     }

@@ -22,7 +22,10 @@ namespace CentroAutomotivo.Controllers
         // GET: Agendamento
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Agendamentos.Include(a => a.StatusOrdemServico).Include(a => a.Veiculo);
+            var appDbContext = _context.Agendamentos.Include(a => a.StatusOrdemServico)
+                                                    .Include(a => a.Veiculo)
+                                                        .ThenInclude(v => v.AppUser);
+                                                        
             return View(await appDbContext.ToListAsync());
         }
 
@@ -37,6 +40,7 @@ namespace CentroAutomotivo.Controllers
             var agendamento = await _context.Agendamentos
                 .Include(a => a.StatusOrdemServico)
                 .Include(a => a.Veiculo)
+                    .ThenInclude(v => v.AppUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (agendamento == null)
             {
@@ -67,8 +71,8 @@ namespace CentroAutomotivo.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Cor", agendamento.StatusOrdemServicoId);
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "AppUserId", agendamento.VeiculoId);
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Nome", agendamento.StatusOrdemServicoId);
+            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome", agendamento.VeiculoId);
             return View(agendamento);
         }
 
@@ -80,13 +84,15 @@ namespace CentroAutomotivo.Controllers
                 return NotFound();
             }
 
-            var agendamento = await _context.Agendamentos.FindAsync(id);
+            var agendamento = await _context.Agendamentos.Include(a => a.Veiculo)
+                                                            .ThenInclude(v => v.AppUser)
+                                                         .FirstOrDefaultAsync(a => a.Id == id);
             if (agendamento == null)
             {
                 return NotFound();
             }
-            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Cor", agendamento.StatusOrdemServicoId);
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "AppUserId", agendamento.VeiculoId);
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Agendamento"), "Id", "Nome", agendamento.StatusOrdemServicoId);
+            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome", agendamento.VeiculoId);
             return View(agendamento);
         }
 
@@ -122,7 +128,7 @@ namespace CentroAutomotivo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Cor", agendamento.StatusOrdemServicoId);
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Agendamento"), "Id", "Cor", agendamento.StatusOrdemServicoId);
             ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "AppUserId", agendamento.VeiculoId);
             return View(agendamento);
         }
