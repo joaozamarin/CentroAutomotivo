@@ -27,5 +27,6 @@ namespace CentroAutomotivo.Models
         public TipoStatus TipoStatus { get; set; }
 
         public ICollection<OrdemServico> OrdensServico { get; set; }
+        public ICollection<Agendamento> Agendamentos { get; set; }
     }
 }

@@ -36,5 +36,6 @@ namespace CentroAutomotivo.Models
         public AppUser AppUser { get; set; }
 
         public ICollection<OrdemServico> OrdensServico { get; set; }
+        public ICollection<Agendamento> Agendamentos { get; set; }
     }
 }

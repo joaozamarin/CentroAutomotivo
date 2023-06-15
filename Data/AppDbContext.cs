@@ -22,6 +22,7 @@ namespace CentroAutomotivo.Data
         public DbSet<ServicoOrdem> ServicosOrdem { get; set; }
         public DbSet<PecaOrdem> PecasOrdem { get; set; }
         public DbSet<TipoStatus> TipoStatuses { get; set; }
+        public DbSet<Agendamento> Agendamentos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
