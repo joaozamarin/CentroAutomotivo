@@ -22,7 +22,7 @@
         <div class="col-2">
             <div class="form-group">
                 <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" class="form-control" />
+                <input id="telefone" asp-for="Telefone" class="form-control" />
                 <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
         </div>
@@ -62,3 +62,11 @@
         <a asp-action="Index" class="btn btn-danger">Cancelar</a>
     </div>
 </form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#telefone").inputmask('(99) 99999-9999');
+        });
+    </script>
+}

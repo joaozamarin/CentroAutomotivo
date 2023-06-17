@@ -16,12 +16,12 @@
             <div class="row">
                 <div class="form-group col-2">
                     <label asp-for="DataHora" class="control-label"></label>
-                    <input asp-for="DataHora" class="form-control" />
+                    <input readonly asp-for="DataHora" class="form-control" />
                     <span asp-validation-for="DataHora" class="text-danger"></span>
                 </div>
                 <div class="form-group col-2">
                     <label asp-for="Telefone" class="control-label"></label>
-                    <input asp-for="Telefone" class="form-control" />
+                    <input readonly asp-for="Telefone" class="form-control" />
                     <span asp-validation-for="Telefone" class="text-danger"></span>
                 </div>
                 <div class="form-group col-3">
@@ -33,6 +33,24 @@
                     <input value="@Model.Veiculo.Nome" class="form-control" readonly />
                 </div>
                 <div class="form-group col-2">
+                    <label asp-for="Reboque" class="control-label"></label>
+                    @{
+                        string Reboque;
+
+                        switch (Model.Reboque)
+                        {
+                            case true:
+                                Reboque = "Sim";
+                            break;
+
+                            case false:
+                                Reboque = "Não";
+                            break;
+                        }
+                    }
+                    <input value="@Reboque" class="form-control" readonly />
+                </div>
+                <div class="form-group col-3">
                     <label asp-for="StatusOrdemServicoId" class="control-label"></label>
                     <select asp-for="StatusOrdemServicoId" id="statusCombo" class="form-control"
                         asp-items="ViewBag.StatusOrdemServicoId"></select>
@@ -41,17 +59,6 @@
                 <div class="form-group col-3" hidden>
                     <label asp-for="VeiculoId" class="control-label"></label>
                     <input asp-for="VeiculoId" class="form-control" />
-                </div>
-            </div>
-
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="Reboque" /> @Html.DisplayNameFor(model =>
-                            model.Reboque)
-                        </label>
-                    </div>
                 </div>
             </div>
 
