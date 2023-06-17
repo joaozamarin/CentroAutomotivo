@@ -166,7 +166,13 @@
             if (id != 0) {
                 window.location = `Cliente/StatusServico/${id}`;
             } else {
-                alert('Não há Ordem de Serviço Em Andamento ou Aguardando Manutenção no momento');
+                    Swal.fire({
+                    icon: 'warning',
+                    title: 'Atenção!',
+                    html: 'Não há Ordem de Serviço ' +
+                          '<span style=color:#CA2222;font-weight:bold;>Aguardando Manutenção</span>' +
+                          ' ou <span style=color:#DDCB21;font-weight:bold;>Em Andamento</span> no momento'
+                });
             }
         }
     </script>
