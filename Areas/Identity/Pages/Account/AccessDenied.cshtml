@@ -1,0 +1,61 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Acesso Negado";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link type="image/png" sizes="16x16" rel="icon" href="~/assets/img/icons8-carro-16.png">
+    <title>
+        @ViewData["Title"] | JAVA Centro Automotivo
+    </title>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <!-- Nucleo Icons -->
+    <link href="~/dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="~/dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- CSS Files -->
+    <link id="pagestyle" href="~/dashboard/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+    <link href="~/css/accessdenied.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="lock"></div>
+    <div class="message">
+        <h1 class="text-center">@ViewData["Title"]</h1>
+        <p style="font-weight: bold; font-size: 18px;">Você não possui permissão para acessar essa Área.</p>
+    </div>
+    <a class="btn btn-outline-info btn-sm" asp-controller="Home" asp-action="Index">Voltar</a>
+    <!--   Core JS Files   -->
+    <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/dashboard/assets/js/core/popper.min.js"></script>
+    <script src="~/dashboard/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/dashboard/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="~/dashboard/assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/dashboard/assets/js/material-dashboard.min.js?v=3.0.0"></script>
+</body>
+
+</html>
