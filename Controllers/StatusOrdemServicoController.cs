@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CentroAutomotivo.Data;
 using CentroAutomotivo.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CentroAutomotivo.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class StatusOrdemServicoController : Controller
     {
         private readonly AppDbContext _context;

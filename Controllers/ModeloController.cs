@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CentroAutomotivo.Data;
 using CentroAutomotivo.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CentroAutomotivo.Controllers
 {
+    [Authorize]
     public class ModeloController : Controller
     {
         private readonly AppDbContext _context;
@@ -20,6 +22,7 @@ namespace CentroAutomotivo.Controllers
         }
 
         // GET: Modelo
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Index()
         {
             var appDbContext = _context.Modelos.Include(m => m.Marca);
@@ -27,6 +30,7 @@ namespace CentroAutomotivo.Controllers
         }
 
         // GET: Modelo/Details/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Modelos == null)
@@ -46,6 +50,7 @@ namespace CentroAutomotivo.Controllers
         }
 
         // GET: Modelo/Create
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nome");
@@ -55,6 +60,7 @@ namespace CentroAutomotivo.Controllers
         // POST: Modelo/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Ano,MarcaId")] Modelo modelo)
@@ -70,6 +76,7 @@ namespace CentroAutomotivo.Controllers
         }
 
         // GET: Modelo/Edit/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Modelos == null)
@@ -89,6 +96,7 @@ namespace CentroAutomotivo.Controllers
         // POST: Modelo/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Ano,MarcaId")] Modelo modelo)
@@ -122,6 +130,7 @@ namespace CentroAutomotivo.Controllers
             return View(modelo);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
@@ -146,6 +155,7 @@ namespace CentroAutomotivo.Controllers
         }
 
         // GET: Modelo/Delete/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Modelos == null)
@@ -165,6 +175,7 @@ namespace CentroAutomotivo.Controllers
         }
 
         // POST: Modelo/Delete/5
+        [Authorize(Roles = "Administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -183,6 +194,7 @@ namespace CentroAutomotivo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ObterModelo(int id)
         {
