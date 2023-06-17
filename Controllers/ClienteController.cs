@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CentroAutomotivo.Data;
 using CentroAutomotivo.Models;
+using CentroAutomotivo.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -34,11 +35,29 @@ namespace CentroAutomotivo.Controllers
                                            .Include(o => o.Veiculo)
                                            .OrderByDescending(o => o.DataEntrada)
                                            .FirstOrDefault(o => o.StatusOrdemServico.Nome != "Concluído" && o.Veiculo.AppUserId == user.Id);
-            
-            if (os is not null)
-                return View(os.Id);
-            
-            return View(0);
+
+            var agendamento = _context.Agendamentos.Include(a => a.StatusOrdemServico)
+                                                   .Include(a => a.Veiculo)
+                                                        .ThenInclude(v => v.AppUser)
+                                                   .OrderByDescending(a => a.DataHora)
+                                                   .FirstOrDefault(a => a.Veiculo.AppUserId == user.Id);
+
+            if (agendamento is not null)
+            {
+                ViewData["Status"] = agendamento.StatusOrdemServico.Nome;
+            }
+            else
+            {
+                ViewData["Status"] = "";
+            }
+
+            var indexClienteVM = new IndexClienteVM()
+            {
+                Agendamento = agendamento,
+                OrdemServicoId = os is not null ? os.Id : 0
+            };
+
+            return View(indexClienteVM);
         }
 
         public async Task<IActionResult> CadastrarVeiculo()
@@ -58,7 +77,7 @@ namespace CentroAutomotivo.Controllers
         public async Task<IActionResult> CadastrarVeiculo([Bind("Id,Nome,Placa,Imagem,ModeloId,AppUserId")] Veiculo veiculo, IFormFile imagem)
         {
             ViewData["ModeloId"] = new SelectList(_context.Modelos, "Id", "Nome", veiculo.ModeloId);
-            
+
             if (ModelState.IsValid)
             {
                 if (imagem != null)
@@ -133,10 +152,10 @@ namespace CentroAutomotivo.Controllers
                                                  .Include(o => o.PecasOrdem)
                                                     .ThenInclude(p => p.Peca)
                                                  .FirstOrDefaultAsync(o => o.Id == id && o.Veiculo.AppUserId == user.Id);
-            
+
             if (os is not null)
                 return View(os);
-            
+
             return NotFound();
         }
 
@@ -179,7 +198,7 @@ namespace CentroAutomotivo.Controllers
 
             ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome", agendamento.VeiculoId);
             ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Agendamento" && s.Nome == "Em Análise"), "Id", "Nome", agendamento.StatusOrdemServicoId);
-            
+
             return View(agendamento);
         }
     }

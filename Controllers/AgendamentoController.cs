@@ -28,7 +28,7 @@ namespace CentroAutomotivo.Controllers
                                                     .Include(a => a.Veiculo)
                                                         .ThenInclude(v => v.AppUser);
                                                         
-            return View(await appDbContext.ToListAsync());
+            return View(await appDbContext.OrderByDescending(a => a.DataHora).ToListAsync());
         }
 
         // GET: Agendamento/Details/5
@@ -88,6 +88,9 @@ namespace CentroAutomotivo.Controllers
 
             var agendamento = await _context.Agendamentos.Include(a => a.Veiculo)
                                                             .ThenInclude(v => v.AppUser)
+                                                         .Include(a => a.Veiculo)
+                                                            .ThenInclude(v => v.Modelo)
+                                                                .ThenInclude(m => m.Marca)
                                                          .FirstOrDefaultAsync(a => a.Id == id);
             if (agendamento == null)
             {
@@ -135,43 +138,27 @@ namespace CentroAutomotivo.Controllers
             return View(agendamento);
         }
 
-        // GET: Agendamento/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Agendamentos == null)
-            {
-                return NotFound();
-            }
+            var agendamento = await _context.Agendamentos.FirstOrDefaultAsync(m => m.Id == id);
 
-            var agendamento = await _context.Agendamentos
-                .Include(a => a.StatusOrdemServico)
-                .Include(a => a.Veiculo)
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (agendamento == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Agendamento não encontrado!" });
             }
 
-            return View(agendamento);
-        }
-
-        // POST: Agendamento/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Agendamentos == null)
-            {
-                return Problem("Entity set 'AppDbContext.Agendamentos'  is null.");
-            }
-            var agendamento = await _context.Agendamentos.FindAsync(id);
-            if (agendamento != null)
+            try
             {
                 _context.Agendamentos.Remove(agendamento);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch
+            {
+                return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
+            }
+
+            return Json(new { success = true, message = "Agendamento excluído com sucesso!" });
         }
 
         private bool AgendamentoExists(int id)

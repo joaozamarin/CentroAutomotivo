@@ -46,6 +46,7 @@ namespace CentroAutomotivo.Controllers
                     .ThenInclude(v => v.AppUser)
                 .Include(o => o.Veiculo)
                     .ThenInclude(v => v.Modelo)
+                        .ThenInclude(m => m.Marca)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ordemServico == null)
             {
@@ -99,6 +100,7 @@ namespace CentroAutomotivo.Controllers
                                                                 .ThenInclude(v => v.AppUser)
                                                            .Include(o => o.Veiculo)
                                                                 .ThenInclude(v => v.Modelo)
+                                                                    .ThenInclude(m => m.Marca)
                                                             .Include(o => o.ServicosOrdem)
                                                                 .ThenInclude(s => s.Servico)
                                                             .Include(o => o.PecasOrdem)

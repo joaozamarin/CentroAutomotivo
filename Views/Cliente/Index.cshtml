@@ -1,7 +1,49 @@
-@model int;
+@model CentroAutomotivo.ViewModel.IndexClienteVM;
 @{
     ViewData["Title"] = "Área do Cliente";
     Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+@if (Model.Agendamento is not null)
+{
+    if (Model.Agendamento.StatusOrdemServico.Nome == "Negada")
+    {
+        <div class="row mb-3"
+            style="background-color: #ffecec; border-radius: 10px; border: 3px solid @Model.Agendamento.StatusOrdemServico.Cor;">
+            <span class="p-2 text-dark" style="font-weight: 600; margin-left: 5px;">
+                Sua Solicitação de Agendamento (@Model.Agendamento.DataHora.ToString("dd/MM 'às' HH:mm")) foi <span
+                    style="font-weight: bolder; color: @Model.Agendamento.StatusOrdemServico.Cor;">NEGADA</span>. Para mais
+                detalhes,
+                <span data-toggle="modal" data-target="#exampleModal"
+                    style="cursor: pointer; color: #07B0F2; font-weight: bolder;">CLIQUE AQUI</span>.
+            </span>
+        </div>
+    };
+
+    if (Model.Agendamento.StatusOrdemServico.Nome == "Em Análise")
+    {
+        <div class="row mb-3"
+            style="background-color: #fcfbf4; border-radius: 10px; border: 3px solid @Model.Agendamento.StatusOrdemServico.Cor;">
+            <span class="p-2 text-dark" style="font-weight: 600; margin-left: 5px;">
+                Sua Solicitação de Agendamento (@Model.Agendamento.DataHora.ToString("dd/MM 'às' HH:mm")) está <span
+                    style="font-weight: bolder; color: @Model.Agendamento.StatusOrdemServico.Cor;">EM ANÁLISE</span>. Aguarde!
+            </span>
+        </div>
+    };
+
+    if (Model.Agendamento.StatusOrdemServico.Nome == "Aprovada")
+    {
+        <div class="row mb-3"
+            style="background-color: #f0ffef; border-radius: 10px; border: 3px solid @Model.Agendamento.StatusOrdemServico.Cor;">
+            <span class="p-2 text-dark" style="font-weight: 600; margin-left: 5px;">
+                Sua Solicitação de Agendamento (@Model.Agendamento.DataHora.ToString("dd/MM 'às' HH:mm")) foi <span
+                    style="font-weight: bolder; color: @Model.Agendamento.StatusOrdemServico.Cor;">APROVADA</span>. Para mais
+                detalhes,
+                <span data-toggle="modal" data-target="#exampleModal"
+                    style="cursor: pointer; color: #07B0F2; font-weight: bolder;">CLIQUE AQUI</span>.
+            </span>
+        </div>
+    };
 }
 
 <div class="row">
@@ -28,7 +70,7 @@
 
 
     <div class="col-sm-4">
-        <div class="card mb-3" style="max-width: 540px;" onclick="GetLink('SolicitarAgendamento')">
+        <div class="card mb-3" style="max-width: 540px;" onclick="GetLinkAgendamento('@ViewBag.Status')">
             <div class="row no-gutters">
                 <div class="col-md-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="95%" height="95%" fill="#07B0F2"
@@ -81,7 +123,7 @@
 
 <div class="row justify-content-center">
     <div class="col-sm-4">
-        <div class="card mb-3" style="max-width: 540px;" onclick="GetLinkStatus(@Model)">
+        <div class="card mb-3" style="max-width: 540px;" onclick="GetLinkStatus(@Model.OrdemServicoId)">
             <div class="row no-gutters">
                 <div class="col-md-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="95%" height="95%" fill="#07B0F2"
@@ -122,6 +164,85 @@
         </div>
     </div>
 </div>
+
+@if (Model.Agendamento is not null)
+{
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detalhes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Solicitação de Agendamento</h5>
+
+                    <div class="row mt-3">
+                        <div class="form-group col-5">
+                            <label class="control-label" asp-for="Agendamento.DataHora"></label>
+                            <input asp-for="Agendamento.DataHora" class="form-control" readonly />
+                        </div>
+                        <div class="form-group col-5">
+                            <label class="control-label" asp-for="Agendamento.Telefone"></label>
+                            <input asp-for="Agendamento.Telefone" class="form-control" readonly />
+                        </div>
+                        <div class="form-group col-2">
+                            @{
+                                string reboque;
+
+                                switch (Model.Agendamento.Reboque)
+                                {
+                                    case true:
+                                        reboque = "Sim";
+                                        break;
+
+                                    case false:
+                                        reboque = "Não";
+                                        break;
+                                }
+                            }
+                            <label class="control-label">Reboque</label>
+                            <input value="@reboque" class="form-control" readonly />
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="form-group col-6">
+                            <label class="control-label" asp-for="Agendamento.VeiculoId"></label>
+                            <input asp-for="Agendamento.Veiculo.Nome" class="form-control" readonly />
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="control-label" asp-for="Agendamento.StatusOrdemServicoId"></label>
+                            <input asp-for="Agendamento.StatusOrdemServico.Nome" class="form-control" readonly
+                                style="font-weight: bold; color: @Model.Agendamento.StatusOrdemServico.Cor;" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="form-group col-12">
+                            <label class="control-label" asp-for="Agendamento.DescricaoProblema"></label>
+                            <textarea asp-for="Agendamento.DescricaoProblema" id="desc" class="form-control" rows="3"
+                                readonly></textarea>
+                        </div>
+                        <div class="form-group col-12 mt-3">
+                            <label class="control-label" asp-for="Agendamento.Resposta"></label>
+                            <textarea asp-for="Agendamento.Resposta" id="desc" class="form-control" rows="3"
+                                readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+                @if (Model.Agendamento.StatusOrdemServico.Nome == "Negada")
+                {
+                    <div class="modal-footer">
+                        <a class="btn btn-primary" asp-action="SolicitarAgendamento">Nova Solicitação</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
 
 @section Styles{
     <style>
@@ -166,12 +287,27 @@
             if (id != 0) {
                 window.location = `Cliente/StatusServico/${id}`;
             } else {
-                    Swal.fire({
+                Swal.fire({
                     icon: 'warning',
                     title: 'Atenção!',
                     html: 'Não há Ordem de Serviço ' +
-                          '<span style=color:#CA2222;font-weight:bold;>Aguardando Manutenção</span>' +
-                          ' ou <span style=color:#DDCB21;font-weight:bold;>Em Andamento</span> no momento'
+                        '<span style=color:#CA2222;font-weight:bold;>Aguardando Manutenção</span>' +
+                        ' ou <span style=color:#DDCB21;font-weight:bold;>Em Andamento</span> no momento'
+                });
+            }
+        }
+
+        function GetLinkAgendamento(status) {
+            if (status != 'Em Análise' || status == '') {
+                window.location = 'Cliente/SolicitarAgendamento';
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Atenção!',
+                    html: 'Existe uma Solicitação de Agendamento ' +
+                        ' <span style=color:#DDCB21;font-weight:bold;>Em Análise</span>. ' +
+                        'Aguarde sua conclusão'
+
                 });
             }
         }
