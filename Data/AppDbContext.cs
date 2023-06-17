@@ -290,6 +290,23 @@ namespace CentroAutomotivo.Data
             builder.Entity<Modelo>().HasData(modelos);
             #endregion
 
+            #region Seed TipoStatus
+            List<TipoStatus> tipoStatuses = new()
+            {
+                new TipoStatus
+                {
+                    Id = 1,
+                    Nome = "Ordem Serviço"
+                },
+                new TipoStatus
+                {
+                    Id = 2,
+                    Nome = "Agendamento"
+                }
+            };
+            builder.Entity<TipoStatus>().HasData(tipoStatuses);
+            #endregion
+
             #region Seed Status
             List<StatusOrdemServico> status = new()
             {
@@ -297,19 +314,43 @@ namespace CentroAutomotivo.Data
                 {
                     Id = 1,
                     Nome = "Aguardando Manutenção",
-                    Cor = "#CA2222"
+                    Cor = "#CA2222",
+                    TipoStatusId = 1
                 },
                 new StatusOrdemServico
                 {
                     Id = 2,
                     Nome = "Em Andamento",
-                    Cor = "#DDCB21"
+                    Cor = "#DDCB21",
+                    TipoStatusId = 1
                 },
                 new StatusOrdemServico
                 {
                     Id = 3,
                     Nome = "Concluído",
-                    Cor = "#26CE1D"
+                    Cor = "#26CE1D",
+                    TipoStatusId = 1
+                },
+                new StatusOrdemServico
+                {
+                    Id = 4,
+                    Nome = "Negada",
+                    Cor = "#CA2222",
+                    TipoStatusId = 2
+                },
+                new StatusOrdemServico
+                {
+                    Id = 5,
+                    Nome = "Em Análise",
+                    Cor = "#DDCB21",
+                    TipoStatusId = 2
+                },
+                new StatusOrdemServico
+                {
+                    Id = 6,
+                    Nome = "Aprovada",
+                    Cor = "#26CE1D",
+                    TipoStatusId = 2
                 }
             };
             builder.Entity<StatusOrdemServico>().HasData(status);
