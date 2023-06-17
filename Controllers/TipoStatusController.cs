@@ -10,91 +10,85 @@ using CentroAutomotivo.Models;
 
 namespace CentroAutomotivo.Controllers
 {
-    public class StatusOrdemServicoController : Controller
+    public class TipoStatusController : Controller
     {
         private readonly AppDbContext _context;
 
-        public StatusOrdemServicoController(AppDbContext context)
+        public TipoStatusController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: StatusOrdemServico
+        // GET: TipoStatus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.StatusOrdensServico.Include(s => s.TipoStatus).ToListAsync());
+              return View(await _context.TipoStatuses.ToListAsync());
         }
 
-        // GET: StatusOrdemServico/Details/5
+        // GET: TipoStatus/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.StatusOrdensServico == null)
+            if (id == null || _context.TipoStatuses == null)
             {
                 return NotFound();
             }
 
-            var statusOrdemServico = await _context.StatusOrdensServico
-                .Include(s => s.TipoStatus)
+            var tipoStatus = await _context.TipoStatuses
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (statusOrdemServico == null)
+            if (tipoStatus == null)
             {
                 return NotFound();
             }
 
-            return View(statusOrdemServico);
+            return View(tipoStatus);
         }
 
-        // GET: StatusOrdemServico/Create
+        // GET: TipoStatus/Create
         public IActionResult Create()
         {
-            ViewData["TipoStatusId"] = new SelectList(_context.TipoStatuses, "Id", "Nome");
             return View();
         }
 
-        // POST: StatusOrdemServico/Create
+        // POST: TipoStatus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Cor,TipoStatusId")] StatusOrdemServico statusOrdemServico)
+        public async Task<IActionResult> Create([Bind("Id,Nome")] TipoStatus tipoStatus)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(statusOrdemServico);
+                _context.Add(tipoStatus);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoStatusId"] = new SelectList(_context.TipoStatuses, "Id", "Nome");
-
-            return View(statusOrdemServico);
+            return View(tipoStatus);
         }
 
-        // GET: StatusOrdemServico/Edit/5
+        // GET: TipoStatus/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.StatusOrdensServico == null)
+            if (id == null || _context.TipoStatuses == null)
             {
                 return NotFound();
             }
 
-            var statusOrdemServico = await _context.StatusOrdensServico.FindAsync(id);
-            if (statusOrdemServico == null)
+            var tipoStatus = await _context.TipoStatuses.FindAsync(id);
+            if (tipoStatus == null)
             {
                 return NotFound();
             }
-            ViewData["TipoStatusId"] = new SelectList(_context.TipoStatuses, "Id", "Nome");
-
-            return View(statusOrdemServico);
+            return View(tipoStatus);
         }
 
-        // POST: StatusOrdemServico/Edit/5
+        // POST: TipoStatus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Cor,TipoStatusId")] StatusOrdemServico statusOrdemServico)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] TipoStatus tipoStatus)
         {
-            if (id != statusOrdemServico.Id)
+            if (id != tipoStatus.Id)
             {
                 return NotFound();
             }
@@ -103,12 +97,12 @@ namespace CentroAutomotivo.Controllers
             {
                 try
                 {
-                    _context.Update(statusOrdemServico);
+                    _context.Update(tipoStatus);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StatusOrdemServicoExists(statusOrdemServico.Id))
+                    if (!TipoStatusExists(tipoStatus.Id))
                     {
                         return NotFound();
                     }
@@ -119,24 +113,22 @@ namespace CentroAutomotivo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoStatusId"] = new SelectList(_context.TipoStatuses, "Id", "Nome");
-            
-            return View(statusOrdemServico);
+            return View(tipoStatus);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var statusOrdemServico = _context.StatusOrdensServico.FirstOrDefault(s => s.Id == id);
+            var tipoStatus = await _context.TipoStatuses.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (statusOrdemServico == null)
+            if (tipoStatus == null)
             {
-                return Json(new { success = false, message = "Status não encontrado!" });
+                return Json(new { success = false, message = "Tipo Status não encontrado!" });
             }
 
             try
             {
-                _context.StatusOrdensServico.Remove(statusOrdemServico);
+                _context.TipoStatuses.Remove(tipoStatus);
                 await _context.SaveChangesAsync();
             }
             catch
@@ -144,12 +136,12 @@ namespace CentroAutomotivo.Controllers
                 return Json(new { success = false, message = "Ocorreu um problema inesperado! Avise ao Suporte!" });
             }
 
-            return Json(new { success = true, message = "Status excluído com sucesso!" });
+            return Json(new { success = true, message = "Tipo Status excluído com sucesso!" });
         }
 
-        private bool StatusOrdemServicoExists(int id)
+        private bool TipoStatusExists(int id)
         {
-            return _context.StatusOrdensServico.Any(e => e.Id == id);
+          return _context.TipoStatuses.Any(e => e.Id == id);
         }
     }
 }

@@ -1,11 +1,11 @@
-@model IEnumerable<CentroAutomotivo.Models.StatusOrdemServico>
+@model IEnumerable<CentroAutomotivo.Models.TipoStatus>
 
 @{
-    ViewData["Title"] = "Status";
+    ViewData["Title"] = "Tipos Status";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Status Ordem</h1>
+<h1>Tipos Status</h1>
 <p>
     <a class="btn btn-success mt-3" asp-action="Create">Adicionar</a>
 </p>
@@ -14,12 +14,6 @@
         <tr>
             <th class="w-70">
                 @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th class="w-70">
-                @Html.DisplayNameFor(model => model.Cor)
-            </th>
-            <th class="w-70">
-                @Html.DisplayNameFor(model => model.TipoStatusId)
             </th>
             <th class="w-30">Ações</th>
         </tr>
@@ -30,16 +24,6 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td class="d-flex align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="@item.Cor"
-                        class="bi bi-circle-fill mr-2" viewBox="0 0 16 16">
-                        <circle cx="8" cy="8" r="8" />
-                    </svg>
-                    @Html.DisplayFor(modelItem => item.Cor)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TipoStatus.Nome)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" title="Alterar" class="text-secondary">
@@ -56,7 +40,7 @@
                                 d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                         </svg>
                     </a> &nbsp;
-                    <a onclick="Delete('/StatusOrdemServico/Delete/@item.Id')" title="Excluir" class="text-danger" style="cursor: pointer;">
+                    <a onclick="Delete('/TipoStatus/Delete/@item.Id')" title="Excluir" class="text-danger" style="cursor: pointer;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" class="bi bi-trash-fill"
                             viewBox="0 0 16 16">
                             <path

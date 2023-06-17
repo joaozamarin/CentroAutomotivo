@@ -1,0 +1,71 @@
+@model CentroAutomotivo.Models.Agendamento
+
+@{
+    ViewData["Title"] = "Detalhes Agendamento";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Agendamentos</h1>
+<h6>Detalhes</h6>
+<hr />
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="form-group col-2">
+                <label asp-for="DataHora" class="control-label"></label>
+                <input asp-for="DataHora" class="form-control" readonly />
+                <span asp-validation-for="DataHora" class="text-danger"></span>
+            </div>
+            <div class="form-group col-2">
+                <label asp-for="Telefone" class="control-label"></label>
+                <input asp-for="Telefone" class="form-control" readonly />
+                <span asp-validation-for="Telefone" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="Veiculo.AppUserId" class="control-label"></label>
+                <input asp-for="Veiculo.AppUser.Nome" class="form-control" readonly />
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="VeiculoId" class="control-label"></label>
+                <input asp-for="Veiculo.Nome" class="form-control" readonly />
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="StatusOrdemServicoId" class="control-label"></label>
+                <input asp-for="StatusOrdemServico.Nome" class="form-control" readonly />
+            </div>
+            <div class="form-group col-2">
+                <label asp-for="Reboque" class="control-label"></label>
+                @{
+                    string Reboque;
+
+                    switch (Model.Reboque)
+                    {
+                        case true:
+                            Reboque = "Sim";
+                        break;
+
+                        case false:
+                            Reboque = "Não";
+                        break;
+                    }
+                }
+                <input value="@Reboque" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="form-group col-6">
+                <label asp-for="DescricaoProblema" class="control-label"></label>
+                <textarea asp-for="DescricaoProblema" class="form-control" rows="3" readonly></textarea>
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="Resposta" class="control-label"></label>
+                <textarea asp-for="Resposta" class="form-control" rows="3" readonly></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group mt-4">
+    <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.Id">Alterar</a>
+    <a asp-action="Index" class="btn btn-danger">Voltar</a>
+</div>

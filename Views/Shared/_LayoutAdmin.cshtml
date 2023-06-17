@@ -70,6 +70,16 @@
           </a>
         </li>
 
+        <li class="@(ViewBag.Title == "Agendamentos" || ViewBag.Title == "Adicionar Ordem de Serviço" || ViewBag.Title == "Editar Ordem de Serviço" || 
+                     ViewBag.Title == "Excluir Ordem de Serviço" || ViewBag.Title == "Detalhes Ordem de Serviço" ||
+                     ViewBag.Title == "Selecionar Usuário" || ViewBag.Title == "Selecionar Veículo" ? "active" : "")">
+          <a asp-controller="Agendamento" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
+            <span class="material-symbols-outlined mr-2">
+              calendar_month
+            </span> <span>Agendamentos</span>
+          </a>
+        </li>
+
         <li class="@(ViewBag.Title == "Veículos" || ViewBag.Title == "Adicionar Veículo" || ViewBag.Title == "Editar Veículo" || 
                      ViewBag.Title == "Excluir Veículo" || ViewBag.Title == "Detalhes Veículo" ? "active" : "")">
           <a asp-controller="Veiculo" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
@@ -113,12 +123,21 @@
           </a>
         </li>
 
-        <li class="@(ViewBag.Title == "Status Ordem" || ViewBag.Title == "Adicionar Status" || ViewBag.Title == "Editar Status" || 
+        <li class="@(ViewBag.Title == "Status" || ViewBag.Title == "Adicionar Status" || ViewBag.Title == "Editar Status" || 
                      ViewBag.Title == "Excluir Status" || ViewBag.Title == "Detalhes Status" ? "active" : "")">
           <a asp-controller="StatusOrdemServico" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
             <span class="material-icons mr-2">
               battery_5_bar
-            </span> <span>Status Ordem</span>
+            </span> <span>Status</span>
+          </a>
+        </li>
+
+        <li class="@(ViewBag.Title == "Tipos Status" || ViewBag.Title == "Adicionar Tipo Status" || ViewBag.Title == "Editar Tipo Status" || 
+                     ViewBag.Title == "Excluir Tipo Status" || ViewBag.Title == "Detalhes Tipo Status" ? "active" : "")">
+          <a asp-controller="TipoStatus" asp-action="Index" style="display: flex; justify-content: start; align-items: center;">
+            <span class="material-symbols-outlined mr-2">
+              format_list_numbered
+            </span> <span>Tipo Status</span>
           </a>
         </li>
 

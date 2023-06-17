@@ -23,6 +23,13 @@
                     <input id="cp1" asp-for="Cor" class="form-control" />
                     <span asp-validation-for="Cor" class="text-danger"></span>
                 </div>
+                <div class="form-group col-3">
+                    <label asp-for="TipoStatusId" class="control-label"></label>
+                    <select asp-for="TipoStatusId" class="form-control custom-select" asp-items="ViewBag.TipoStatusId">
+                        <option selected disabled>Selecione...</option>
+                    </select>
+                    <span asp-validation-for="TipoStatusId" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-success" />

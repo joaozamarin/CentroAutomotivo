@@ -62,7 +62,7 @@ namespace CentroAutomotivo.Controllers
             ordemServico.Veiculo = _context.Veiculos.Include(v => v.AppUser)
                                                     .FirstOrDefault(v => v.Id == veiculoId);
 
-            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Nome");
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Ordem Serviço"), "Id", "Nome");
 
             return View(ordemServico);
         }
@@ -80,7 +80,7 @@ namespace CentroAutomotivo.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Cor", ordemServico.StatusOrdemServicoId);
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Ordem Serviço"), "Id", "Nome");
             return View(ordemServico);
         }
 
@@ -112,7 +112,7 @@ namespace CentroAutomotivo.Controllers
                 ordemServico.DataSaida = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
             }
 
-            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Nome", ordemServico.StatusOrdemServicoId);
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Ordem Serviço"), "Id", "Nome", ordemServico.StatusOrdemServicoId);
             ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome", ordemServico.VeiculoId);
             ViewData["Servicos"] = new SelectList(_context.Servicos.OrderBy(s => s.Nome), "Id", "Nome");
             ViewData["Pecas"] = new SelectList(_context.Pecas.Where(p => p.Quantidade >= 5).OrderBy(s => s.Nome), "Id", "Nome");
@@ -231,7 +231,7 @@ namespace CentroAutomotivo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico, "Id", "Cor", ordemServico.StatusOrdemServicoId);
+            ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Ordem Serviço"), "Id", "Nome", ordemServico.StatusOrdemServicoId);
             ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "AppUserId", ordemServico.VeiculoId);
             ViewData["Servicos"] = new SelectList(_context.Servicos.OrderBy(s => s.Nome), "Id", "Nome");
             ViewData["Pecas"] = new SelectList(_context.Pecas.Where(p => p.Quantidade >= 5).OrderBy(s => s.Nome), "Id", "Nome");
