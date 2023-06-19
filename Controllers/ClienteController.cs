@@ -45,6 +45,7 @@ namespace CentroAutomotivo.Controllers
             if (agendamento is not null)
             {
                 ViewData["Status"] = agendamento.StatusOrdemServico.Nome;
+                ViewData["NomeUser"] = user.Nome.Split(" ")[0];
             }
             else
             {

@@ -11,7 +11,7 @@
         <div class="row mb-3"
             style="background-color: #ffecec; border-radius: 10px; border: 3px solid @Model.Agendamento.StatusOrdemServico.Cor;">
             <span class="p-2 text-dark" style="font-weight: 600; margin-left: 5px;">
-                Sua Solicitação de Agendamento (@Model.Agendamento.DataHora.ToString("dd/MM 'às' HH:mm")) foi <span
+                @ViewBag.NomeUser, sua Solicitação de Agendamento (@Model.Agendamento.DataHora.ToString("dd/MM 'às' HH:mm")) foi <span
                     style="font-weight: bolder; color: @Model.Agendamento.StatusOrdemServico.Cor;">NEGADA</span>. Para mais
                 detalhes,
                 <span data-toggle="modal" data-target="#exampleModal"
@@ -25,7 +25,7 @@
         <div class="row mb-3"
             style="background-color: #fcfbf4; border-radius: 10px; border: 3px solid @Model.Agendamento.StatusOrdemServico.Cor;">
             <span class="p-2 text-dark" style="font-weight: 600; margin-left: 5px;">
-                Sua Solicitação de Agendamento (@Model.Agendamento.DataHora.ToString("dd/MM 'às' HH:mm")) está <span
+                @ViewBag.NomeUser, sua Solicitação de Agendamento (@Model.Agendamento.DataHora.ToString("dd/MM 'às' HH:mm")) está <span
                     style="font-weight: bolder; color: @Model.Agendamento.StatusOrdemServico.Cor;">EM ANÁLISE</span>. Aguarde!
             </span>
         </div>
@@ -36,7 +36,7 @@
         <div class="row mb-3"
             style="background-color: #f0ffef; border-radius: 10px; border: 3px solid @Model.Agendamento.StatusOrdemServico.Cor;">
             <span class="p-2 text-dark" style="font-weight: 600; margin-left: 5px;">
-                Sua Solicitação de Agendamento (@Model.Agendamento.DataHora.ToString("dd/MM 'às' HH:mm")) foi <span
+                @ViewBag.NomeUser, sua Solicitação de Agendamento (@Model.Agendamento.DataHora.ToString("dd/MM 'às' HH:mm")) foi <span
                     style="font-weight: bolder; color: @Model.Agendamento.StatusOrdemServico.Cor;">APROVADA</span>. Para mais
                 detalhes,
                 <span data-toggle="modal" data-target="#exampleModal"
