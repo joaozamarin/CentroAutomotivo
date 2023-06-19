@@ -357,7 +357,12 @@
             });
 
         } else {
-            alert('Esse serviço já foi adicionado!');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atenção!',
+                html: 'Esse serviço já foi adicionado!'
+
+            });
         }
         document.getElementById('inputServicos').value = servicos;
     }
@@ -449,7 +454,12 @@
                 }
             });
         } else {
-            alert('Essa peça já foi adicionada!');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atenção!',
+                html: 'Essa peça já foi adicionada!'
+
+            });
         }
     }
 
