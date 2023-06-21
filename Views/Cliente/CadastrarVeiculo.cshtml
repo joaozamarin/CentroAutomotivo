@@ -35,6 +35,7 @@
                     <select id="modelo" asp-for="ModeloId" class="form-control custom-select" asp-items="ViewBag.ModeloId">
                         <option selected disabled>Selecione...</option>
                     </select>
+                    <span id="validateModelo" class="text-danger">Selecione um Modelo</span>
                 </div>
                 <div id="modeloAno" class="form-group col-2" style="display: none;">
                     <label class="control-label">Ano</label>
@@ -46,7 +47,7 @@
                 </div>
             </div>
             <div class="form-group mt-5">
-                <input type="submit" value="Salvar" class="btn btn-success" />
+                <input id="submit" type="submit" value="Salvar" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-danger">Cancelar</a>
             </div>
         </div>
@@ -110,6 +111,9 @@
 
         $(document).ready(function () {
             $("#placa").inputmask('AAA-9#99');
+
+            $('#submit').prop('disabled', true);
+            $('#validateModelo').hide();
         });
 
         $('#uploadImg').click(() => {
@@ -137,6 +141,17 @@
                     $('#modeloMarca').show();
                 }
             });
+        })
+
+        $('#modelo').click(() => {
+            let modelo = document.getElementById('modelo').value;
+
+            if (modelo == 'Selecione...') {
+                $('#validateModelo').show();
+            } else {
+                $('#validateModelo').hide();
+                $('#submit').prop('disabled', false);
+            }
         })
     </script>
 }

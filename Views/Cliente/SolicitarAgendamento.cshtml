@@ -29,7 +29,10 @@
         <div class="col-3">
             <div class="form-group">
                 <label asp-for="VeiculoId" class="control-label"></label>
-                <select asp-for="VeiculoId" class="form-control" asp-items="ViewBag.VeiculoId"></select>
+                <select id="veiculo" asp-for="VeiculoId" class="form-control" asp-items="ViewBag.VeiculoId">
+                    <option selected disabled>Selecione...</option>
+                </select>
+                <span id="validateVeiculo" class="text-danger">Selecione um Veículo</span>
             </div>
         </div>
     </div>
@@ -58,15 +61,32 @@
         <span asp-validation-for="StatusOrdemServicoId" class="text-danger"></span>
     </div>
     <div class="form-group mt-4">
-        <input type="submit" value="Salvar" class="btn btn-success" />
+        <input id="submit" type="submit" value="Salvar" class="btn btn-success" />
         <a asp-action="Index" class="btn btn-danger">Cancelar</a>
     </div>
 </form>
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#telefone").inputmask('(99) 99999-9999');
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        $("#telefone").inputmask('(99) 99999-9999');
+    });
+
+    $(document).ready(function () {
+        $('#submit').prop('disabled', true)
+
+        $('#validateVeiculo').hide();
+    });
+
+    $('#veiculo').click(() => {
+        let val = document.getElementById('veiculo').value;
+
+        if (val == 'Selecione...') {
+            $('#validateVeiculo').show();
+        } else {
+            $('#validateVeiculo').hide();
+            $('#submit').prop('disabled', false);
+        }
+    })
+</script>
 }

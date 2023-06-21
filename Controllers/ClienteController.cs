@@ -197,7 +197,7 @@ namespace CentroAutomotivo.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Nome", agendamento.VeiculoId);
+            ViewData["VeiculoId"] = new SelectList(_context.Veiculos.Where(v => v.AppUserId == _userManager.GetUserAsync(User).Result.Id), "Id", "Nome", agendamento.VeiculoId);
             ViewData["StatusOrdemServicoId"] = new SelectList(_context.StatusOrdensServico.Where(s => s.TipoStatus.Nome == "Agendamento" && s.Nome == "Em Análise"), "Id", "Nome", agendamento.StatusOrdemServicoId);
 
             return View(agendamento);
