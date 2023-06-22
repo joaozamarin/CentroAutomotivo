@@ -12,70 +12,190 @@
 <form asp-action="SolicitarAgendamento">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
-        <div class="col-2">
-            <div class="form-group">
-                <label asp-for="DataHora" class="control-label"></label>
-                <input asp-for="DataHora" class="form-control" />
-                <span asp-validation-for="DataHora" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-2">
-            <div class="form-group">
-                <label asp-for="Telefone" class="control-label"></label>
-                <input id="telefone" asp-for="Telefone" class="form-control" />
-                <span asp-validation-for="Telefone" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group">
-                <label asp-for="VeiculoId" class="control-label"></label>
-                <select id="veiculo" asp-for="VeiculoId" class="form-control" asp-items="ViewBag.VeiculoId">
-                    <option selected disabled>Selecione...</option>
-                </select>
-                <span id="validateVeiculo" class="text-danger">Selecione um Veículo</span>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-3">
         <div class="col-7">
-            <div class="form-group">
-                <label asp-for="DescricaoProblema" class="control-label"></label>
-                <textarea asp-for="DescricaoProblema" id="desc" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="DescricaoProblema" class="text-danger"></span>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="DataHora" class="control-label"></label>
+                        <input asp-for="DataHora" class="form-control" />
+                        <span asp-validation-for="DataHora" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Telefone" class="control-label"></label>
+                        <input id="telefone" asp-for="Telefone" class="form-control" />
+                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="VeiculoId" class="control-label"></label>
+                        <select id="veiculo" asp-for="VeiculoId" class="form-control" asp-items="ViewBag.VeiculoId">
+                            <option selected disabled>Selecione...</option>
+                        </select>
+                        <span id="validateVeiculo" class="text-danger">Selecione um Veículo</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label asp-for="DescricaoProblema" class="control-label"></label>
+                        <textarea asp-for="DescricaoProblema" id="desc" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="DescricaoProblema" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input id="reboque" class="form-check-input" asp-for="Reboque" /> @Html.DisplayNameFor(model
+                            => model.Reboque)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div hidden class="form-group">
+                <label asp-for="StatusOrdemServicoId" class="control-label"></label>
+                <select id="status" asp-for="StatusOrdemServicoId" class="form-control"
+                    asp-items="ViewBag.StatusOrdemServicoId"></select>
+                <span asp-validation-for="StatusOrdemServicoId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4">
+                <input id="submit" type="submit" value="Salvar" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">Cancelar</a>
             </div>
         </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col">
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Reboque" /> @Html.DisplayNameFor(model => model.Reboque)
-                </label>
+
+        <div id="endereco" class="col-5">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="control-label">CEP</label>
+                        <input id="cep" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label">Rua</label>
+                        <input id="rua" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="control-label">Número</label>
+                        <input id="numero" class="form-control" />
+                        <span id="validateNumero" class="text-danger">Insira o Número</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-5">
+                    <div class="form-group">
+                        <label class="control-label">Bairro</label>
+                        <input id="bairro" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="form-group">
+                        <label class="control-label">Cidade</label>
+                        <input id="cidade" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label class="control-label">Estado</label>
+                        <input id="estado" class="form-control" readonly />
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div hidden class="form-group">
-        <label asp-for="StatusOrdemServicoId" class="control-label"></label>
-        <select id="status" asp-for="StatusOrdemServicoId" class="form-control"
-            asp-items="ViewBag.StatusOrdemServicoId"></select>
-        <span asp-validation-for="StatusOrdemServicoId" class="text-danger"></span>
-    </div>
-    <div class="form-group mt-4">
-        <input id="submit" type="submit" value="Salvar" class="btn btn-success" />
-        <a asp-action="Index" class="btn btn-danger">Cancelar</a>
     </div>
 </form>
 
 @section Scripts {
 <script>
-    $(document).ready(function () {
-        $("#telefone").inputmask('(99) 99999-9999');
-    });
+    let precisaReboque = false;
 
     $(document).ready(function () {
+        $("#telefone").inputmask('(99) 99999-9999');
+        $("#cep").inputmask('99999-999');
+
         $('#submit').prop('disabled', true)
 
         $('#validateVeiculo').hide();
+        $('#validateNumero').hide();
+
+        $('#endereco').hide();
+    });
+
+    $('#reboque').click(() => {
+        $('#submit').prop('disabled', true)
+        precisaReboque = !precisaReboque;
+
+        $('#reboque').val(precisaReboque);
+
+        if (precisaReboque) {
+            $('#endereco').show();
+
+            $('#cep').blur(() => {
+                $('#numero').val("");
+                var cep = $('#cep').val().replace(/\D/g, '');
+
+                if (cep != "") {
+                    var validacep = /^[0-9]{8}$/;
+
+                    if (validacep.test(cep)) {
+                        $.ajax({
+                            url: `https://viacep.com.br/ws/${cep}/json/`,
+                            dataType: 'json',
+                            success: function (response) {
+                                if (!response['erro']) {
+                                    $('#rua').val(response['logradouro']);
+                                    $('#bairro').val(response['bairro']);
+                                    $('#cidade').val(response['localidade']);
+                                    $('#estado').val(response['uf']);
+                                } else {
+                                    alert('Ocorreu um erro');
+                                    $('#cep').val("");
+                                }
+                            }
+                        });
+
+                        if ($('#numero').val() == '') {
+                            $('#validateNumero').show();
+                            $('#submit').prop('disabled', true);
+                        }
+
+                        $('#numero').change(() => {
+                            if ($('#numero').val() != '') {
+                                $('#validateNumero').hide();
+                                $('#submit').prop('disabled', false);
+                            } else {
+                                $('#validateNumero').show();
+                                $('#submit').prop('disabled', true);
+                            }
+                        })
+
+                    } else {
+                        alert('Insira um CEP válido');
+                    }
+                } else {
+                    alert('Insira um CEP');
+                }
+            })
+        } else {
+            $('#endereco').hide();
+
+            $('#rua').val("");
+            $('#bairro').val("");
+            $('#cidade').val("");
+            $('#estado').val("");
+            $('#cep').val("");
+            $('#numero').val("");
+        }
     });
 
     $('#veiculo').click(() => {
