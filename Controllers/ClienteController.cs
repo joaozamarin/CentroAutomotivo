@@ -188,7 +188,7 @@ namespace CentroAutomotivo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SolicitarAgendamento([Bind("Id,DataHora,Telefone,DescricaoProblema,Resposta,Reboque,VeiculoId,StatusOrdemServicoId")] Agendamento agendamento)
+        public async Task<IActionResult> SolicitarAgendamento([Bind("Id,DataHora,Telefone,DescricaoProblema,Resposta,Reboque,VeiculoId,StatusOrdemServicoId,CEP,Rua,Numero,Bairro,Cidade,UF")] Agendamento agendamento)
         {
             if (ModelState.IsValid)
             {

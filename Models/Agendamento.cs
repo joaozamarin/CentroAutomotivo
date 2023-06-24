@@ -44,5 +44,27 @@ namespace CentroAutomotivo.Models
         public int StatusOrdemServicoId { get; set; }
         [ForeignKey("StatusOrdemServicoId")]
         public StatusOrdemServico StatusOrdemServico { get; set; }
+
+        #region Endereço
+        [Display(Name = "CEP")]
+        [StringLength(9, MinimumLength = 9)]
+        public string CEP { get; set; }
+
+        [Display(Name = "Rua")]
+        public string Rua { get; set; }
+
+        [Display(Name = "Número")]
+        public string Numero { get; set; }
+
+        [Display(Name = "Bairro")]
+        public string Bairro { get; set; }
+
+        [Display(Name = "Cidade")]
+        public string Cidade { get; set; }
+
+        [Display(Name = "Estado")]
+        [StringLength(2, MinimumLength = 2)]
+        public string UF { get; set; }
+        #endregion
     }
 }
