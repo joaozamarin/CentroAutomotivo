@@ -133,6 +133,8 @@ namespace CentroAutomotivo.Controllers
                                                  .Include(v => v.OrdensServico)
                                                     .ThenInclude(o => o.StatusOrdemServico)
                                                  .Include(v => v.AppUser)
+                                                 .Include(v => v.Agendamentos)
+                                                    .ThenInclude(ag => ag.StatusOrdemServico)
                                                  .FirstOrDefaultAsync(v => v.Id == veiculoId);
 
             return View(veiculo);
