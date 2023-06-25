@@ -1,4 +1,4 @@
-@model IEnumerable<CentroAutomotivo.Models.OrdemServico>
+@model CentroAutomotivo.ViewModel.HistoricoVM
 @{
     ViewData["Title"] = "Status do Serviço";
     Layout = "~/Views/Shared/_LayoutCliente.cshtml";
@@ -8,30 +8,31 @@
     <h2 class="">Meu Histórico</h2>
 </div>
 
-<div class="card p-3" style="border: 3px solid #07B0F2; background: #EDEDED; border-radius: 20px;">
-    <table id="historico" class="table hover" style="width: 100%;">
+<h3>Ordens de Serviço</h3>
+<div class="card p-3 mb-5" style="border: 3px solid #07B0F2; background: #EDEDED; border-radius: 20px;">
+    <table id="ordemServico" class="table hover" style="width: 100%;">
         <thead>
             <tr>
                 <th class="w-70">
-                    @Html.DisplayNameFor(model => model.Veiculo.AppUserId)
+                    @Html.DisplayNameFor(model => model.OrdemServicos[0].Veiculo.AppUserId)
                 </th>
                 <th class="w-70">
-                    @Html.DisplayNameFor(model => model.Veiculo)
+                    @Html.DisplayNameFor(model => model.OrdemServicos[0].Veiculo)
                 </th>
                 <th class="w-70">
-                    @Html.DisplayNameFor(model => model.DataEntrada)
+                    @Html.DisplayNameFor(model => model.OrdemServicos[0].DataEntrada)
                 </th>
                 <th class="w-70">
-                    @Html.DisplayNameFor(model => model.DataSaida)
+                    @Html.DisplayNameFor(model => model.OrdemServicos[0].DataSaida)
                 </th>
                 <th class="w-70">
-                    @Html.DisplayNameFor(model => model.StatusOrdemServicoId)
+                    @Html.DisplayNameFor(model => model.OrdemServicos[0].StatusOrdemServicoId)
                 </th>
                 <th class="w-30">Ação</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.OrdemServicos)
             {
                 <tr>
                     <td>
@@ -63,10 +64,13 @@
                         &nbsp;@item.StatusOrdemServico.Nome
                     </td>
                     <td>
-                        <a asp-action="StatusServico" asp-route-id="@item.Id" title="Detalhes" class="text-secondary" style="margin-left: 15px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#07B0F2" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                        <a asp-action="StatusServico" asp-route-id="@item.Id" title="Detalhes" class="text-secondary"
+                            style="margin-left: 15px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#07B0F2"
+                                class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path
+                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
                             </svg>
                         </a>
                     </td>
@@ -76,14 +80,263 @@
     </table>
 </div>
 
+<h3>Agendamentos</h3>
+<div class="card p-3 mb-5" style="border: 3px solid #07B0F2; background: #EDEDED; border-radius: 20px;">
+    <table id="agendamento" class="table hover" style="width: 100%;">
+        <thead>
+            <tr>
+                <th class="w-70">
+                    @Html.DisplayNameFor(model => model.Agendamentos[0].Veiculo.AppUserId)
+                </th>
+                <th class="w-70">
+                    @Html.DisplayNameFor(model => model.Agendamentos[0].Veiculo)
+                </th>
+                <th class="w-70">
+                    @Html.DisplayNameFor(model => model.Agendamentos[0].DataHora)
+                </th>
+                <th class="w-70">
+                    Reboque
+                </th>
+                <th class="w-70">
+                    @Html.DisplayNameFor(model => model.Agendamentos[0].StatusOrdemServicoId)
+                </th>
+                <th class="w-30">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Agendamentos)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Veiculo.AppUser.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Veiculo.Nome)
+                    </td>
+                    <td>
+                        @item.DataHora.ToString("dd/MM/yyyy HH:mm")
+                    </td>
+                    @{
+                        string reboque;
+                        switch (item.Reboque)
+                        {
+                            case true:
+                                reboque = "Sim";
+                                break;
+
+                            case false:
+                                reboque = "Não";
+                                break;
+                        }
+                    }
+                    <td>@reboque</td>
+                    <td class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="@item.StatusOrdemServico.Cor"
+                            class="bi bi-circle-fill mr-2" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8" />
+                        </svg>
+                        &nbsp;@item.StatusOrdemServico.Nome
+                    </td>
+                    <td>
+                        <a onclick="ObterAgendamento(@item.Id)" title="Detalhes" class="text-secondary"
+                            style="margin-left: 15px; cursor: pointer;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#07B0F2"
+                                class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path
+                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="detalhes" style="display: none;">
+    <h3 class="text-center">Detalhes Solicitação</h3>
+    <div class="card p-3 mb-5" style="border: 3px solid #07B0F2; border-radius: 20px;">
+        <div class="d-flex justify-content-end">
+            <button onclick="CloseDetails()" type="button" class="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-7">
+                <h5 class="text-center">Solicitação</h5>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Data e Hora</label>
+                            <input id="dataHora" class="form-control" readonly/>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Telefone</label>
+                            <input id="telefone" class="form-control" readonly/>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Veículo</label>
+                            <input id="veiculo" class="form-control" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Descrição do Problema</label>
+                            <textarea id="problema" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Resposta</label>
+                            <textarea id="resposta" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Status</label>
+                            <input id="status" class="form-control" style="font-weight: bolder;" readonly/>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Precisa de Reboque?</label>
+                            <input id="reboque" class="form-control" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="endereco" class="col-5" style="display: none;">
+                <h5 class="text-center">Endereço</h5>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label class="control-label">CEP</label>
+                            <input id="cep" class="form-control" readonly/>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Rua</label>
+                            <input id="rua" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label class="control-label">Número</label>
+                            <input id="numero" class="form-control" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">Bairro</label>
+                            <input id="bairro" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">Cidade</label>
+                            <input id="cidade" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="control-label">UF</label>
+                            <input id="estado" class="form-control" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
+        let agendamentos = [];
+
         $(document).ready(function () {
-            $('#historico').DataTable({
+            $('#ordemServico').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
                 }
             });
+
+            $('#agendamento').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+                }
+            });
+
+            $.ajax({
+                url: '/Cliente/ObterAgendamentos/',
+                dataType: 'json',
+                success: function (response) {
+                    agendamentos = response;
+                    console.log(agendamentos);
+                }
+            })
         });
+
+        function ObterAgendamento(id) {
+            let agendamento = agendamentos.find(ag => ag['id'] == id);
+            let reboque;
+
+            switch(agendamento['reboque']) {
+                case true:
+                    reboque = 'Sim'
+                break;
+
+                case false:
+                    reboque = 'Não'
+                break;
+            }
+            console.log(agendamento);
+
+            $('#dataHora').val(agendamento['dataHora']);
+            $('#telefone').val(agendamento['telefone']);
+            $('#veiculo').val(agendamento['veiculo']['nome'])
+            $('#problema').val(agendamento['descricaoProblema']);
+            $('#resposta').val(agendamento['resposta']);
+            $('#status').val(agendamento['statusOrdemServico']['nome']);
+            $('#reboque').val(reboque);
+
+            document.getElementById('status').style.color = agendamento['statusOrdemServico']['cor'];
+
+            if (agendamento['statusOrdemServico']['nome'] == 'Em Análise' && agendamento['resposta'] == null) {
+                $('#resposta').val('Aguarde, sua solicitação está em análise.');
+            }
+
+            if (agendamento['reboque']) {
+                $('#cep').val(agendamento['cep']);
+                $('#rua').val(agendamento['rua']);
+                $('#numero').val(agendamento['numero']);
+                $('#bairro').val(agendamento['bairro']);
+                $('#cidade').val(agendamento['cidade']);
+                $('#estado').val(agendamento['uf']);
+
+                $('#endereco').show();
+            } else {
+                $('#endereco').hide();
+            }
+
+            $('#detalhes').show();
+            $(document).scrollTop(window.screen.height);
+        }
+
+        function CloseDetails() {
+            $('#detalhes').hide();
+        }
     </script>
 }

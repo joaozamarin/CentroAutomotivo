@@ -164,14 +164,69 @@ namespace CentroAutomotivo.Controllers
         {
             var user = _userManager.GetUserAsync(User).Result;
 
-            var OrdemServico = await _context.OrdensServico.Include(os => os.StatusOrdemServico)
+            var ordemServico = await _context.OrdensServico.Include(os => os.StatusOrdemServico)
                                                            .Include(os => os.Veiculo)
                                                                 .ThenInclude(v => v.AppUser)
                                                            .Where(os => os.Veiculo.AppUserId == user.Id)
                                                            .OrderByDescending(os => os.DataEntrada)
                                                            .ToListAsync();
 
-            return View(OrdemServico);
+            var agendamento = await _context.Agendamentos.Include(ag => ag.StatusOrdemServico)
+                                                         .Include(ag => ag.Veiculo)
+                                                            .ThenInclude(v => v.AppUser)
+                                                         .Where(ag => ag.Veiculo.AppUserId == user.Id)
+                                                         .OrderByDescending(ag => ag.DataHora)
+                                                         .ToListAsync();
+
+            var historicoVM = new HistoricoVM()
+            {
+                OrdemServicos = ordemServico,
+                Agendamentos = agendamento
+            };
+
+            return View(historicoVM);
+        }
+
+        public async Task<IActionResult> ObterAgendamentos()
+        {
+            var agendamentos = await _context.Agendamentos.Include(ag => ag.Veiculo)
+                                                          .Include(ag => ag.StatusOrdemServico)
+                                                          .Where(ag => ag.Veiculo.AppUserId == _userManager.GetUserAsync(User).Result.Id)
+                                                          .OrderByDescending(ag => ag.DataHora)
+                                                          .ToListAsync();
+
+            var agtDTO = new List<AgendamentoDTO>();
+
+            foreach (var ag in agendamentos)
+            {
+                ag.Veiculo.Agendamentos = null;
+                ag.StatusOrdemServico.Agendamentos = null;
+                ag.Veiculo.AppUser.Veiculos = null;
+
+                agtDTO.Add(
+                    new AgendamentoDTO
+                    {
+                        Id = ag.Id,
+                        DataHora = ag.DataHora.ToString("dd/MM/yyyy 'às' HH:mm"),
+                        Telefone = ag.Telefone,
+                        DescricaoProblema = ag.DescricaoProblema,
+                        Resposta = ag.Resposta,
+                        Reboque = ag.Reboque,
+                        VeiculoId = ag.VeiculoId,
+                        Veiculo = ag.Veiculo,
+                        StatusOrdemServicoId = ag.StatusOrdemServicoId,
+                        StatusOrdemServico = ag.StatusOrdemServico,
+                        CEP = ag.CEP,
+                        Rua = ag.Rua,
+                        Numero = ag.Numero,
+                        Bairro = ag.Bairro,
+                        Cidade = ag.Cidade,
+                        UF = ag.UF
+                    }
+                );
+            }
+
+            return Json(agtDTO);
         }
 
         public IActionResult SolicitarAgendamento()
