@@ -48,7 +48,7 @@
 
 <div class="row">
     <div class="col-sm-4">
-        <div class="card mb-3" style="max-width: 540px;" onclick="GetLink('CadastrarVeiculo')">
+        <div class="card card-index mb-3" style="max-width: 540px;" onclick="GetLink('CadastrarVeiculo')">
             <div class="row no-gutters">
                 <div class="col-md-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="95%" height="95%" fill="#07B0F2"
@@ -60,8 +60,8 @@
                     </svg>
                 </div>
                 <div class="col-md-6">
-                    <div class="card-body">
-                        <h5 class="card-title">Cadastrar Veículo</h5>
+                    <div class="card-body card-body-index">
+                        <h5 class="card-title card-title-index">Cadastrar Veículo</h5>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
 
 
     <div class="col-sm-4">
-        <div class="card mb-3" style="max-width: 540px;" onclick="GetLinkAgendamento('@ViewBag.Status')">
+        <div class="card card-index mb-3" style="max-width: 540px;" onclick="GetLinkAgendamento('@ViewBag.Status')">
             <div class="row no-gutters">
                 <div class="col-md-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="95%" height="95%" fill="#07B0F2"
@@ -82,8 +82,8 @@
                     </svg>
                 </div>
                 <div class="col-md-6">
-                    <div class="card-body">
-                        <h5 class="card-title">Solicitar Agendamento</h5>
+                    <div class="card-body card-body-index">
+                        <h5 class="card-title card-title-index">Solicitar Agendamento</h5>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
 
 
     <div class="col-sm-4">
-        <div class="card mb-3" style="max-width: 540px;" onclick="GetLink('MeusVeiculos')">
+        <div class="card card-index mb-3" style="max-width: 540px;" onclick="GetLink('MeusVeiculos')">
             <div class="row no-gutters">
                 <div class="col-md-6">
                     <svg class="px-2" width="95%" height="95%" viewBox="0 0 174 174" fill="none"
@@ -110,8 +110,8 @@
 
                 </div>
                 <div class="col-md-6">
-                    <div class="card-body">
-                        <h5 class="card-title">Meus Veículos</h5>
+                    <div class="card-body card-body-index">
+                        <h5 class="card-title card-title-index">Meus Veículos</h5>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
 
 <div class="row justify-content-center">
     <div class="col-sm-4">
-        <div class="card mb-3" style="max-width: 540px;" onclick="GetLinkStatus(@Model.OrdemServicoId)">
+        <div class="card card-index mb-3" style="max-width: 540px;" onclick="GetLinkStatus(@Model.OrdemServicoId)">
             <div class="row no-gutters">
                 <div class="col-md-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="95%" height="95%" fill="#07B0F2"
@@ -133,8 +133,8 @@
                     </svg>
                 </div>
                 <div class="col-md-6">
-                    <div class="card-body">
-                        <h5 class="card-title">Status do Serviço</h5>
+                    <div class="card-body card-body-index">
+                        <h5 class="card-title card-title-index">Status do Serviço</h5>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@
 
 
     <div class="col-sm-4">
-        <div class="card mb-3" style="max-width: 540px;" onclick="GetLink('Historico')">
+        <div class="card card-index mb-3" style="max-width: 540px;" onclick="GetLink('Historico')">
             <div class="row no-gutters">
                 <div class="col-md-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="95%" height="95%" fill="#07B0F2"
@@ -156,8 +156,8 @@
                     </svg>
                 </div>
                 <div class="col-md-6">
-                    <div class="card-body">
-                        <h5 class="card-title">Meu Histórico</h5>
+                    <div class="card-body card-body-index">
+                        <h5 class="card-title card-title-index">Meu Histórico</h5>
                     </div>
                 </div>
             </div>
@@ -232,6 +232,70 @@
                                 readonly></textarea>
                         </div>
                     </div>
+
+                    @if (Model.Agendamento.Reboque)
+                    {
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <div id="accordion" class="mt-2">
+                                    <div class="card">
+                                        <div class="card-header" id="endereco">
+                                            <div class="collapsed d-flex align-items-center justify-content-between" data-toggle="collapse"
+                                                data-target="#collapseEndereco" aria-expanded="false" aria-controls="collapseEndereco" style="cursor: pointer;">
+                                                <h5>
+                                                    Endereço
+                                                </h5>
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                                    class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd"
+                                                        d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div id="collapseEndereco" class="collapse" aria-labelledby="endereco" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="row">
+                                                            <div class="form-group col-4">
+                                                                <label asp-for="Agendamento.CEP" class="control-label"></label>
+                                                                <input asp-for="Agendamento.CEP" class="form-control" readonly />
+                                                            </div>
+                                                            <div class="form-group col-8">
+                                                                <label asp-for="Agendamento.Rua" class="control-label"></label>
+                                                                <input asp-for="Agendamento.Rua" class="form-control" readonly />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="form-group col-9">
+                                                                <label asp-for="Agendamento.Bairro" class="control-label"></label>
+                                                                <input asp-for="Agendamento.Bairro" class="form-control" readonly />
+                                                            </div>
+                                                            <div class="form-group col-3">
+                                                                <label asp-for="Agendamento.Numero" class="control-label"></label>
+                                                                <input asp-for="Agendamento.Numero" class="form-control" readonly />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="form-group col-10">
+                                                                <label asp-for="Agendamento.Cidade" class="control-label"></label>
+                                                                <input asp-for="Agendamento.Cidade" class="form-control" readonly />
+                                                            </div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="Agendamento.UF" class="control-label"></label>
+                                                                <input asp-for="Agendamento.UF" class="form-control" readonly />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
                 @if (Model.Agendamento.StatusOrdemServico.Nome == "Negada")
                 {
@@ -246,21 +310,21 @@
 
 @section Styles{
     <style>
-        .card {
+        .card-index {
             border: 5px solid #07B0F2;
             background: #F2F2F2;
             cursor: pointer;
             height: 350px;
         }
 
-        .card:hover {
+        .card-index:hover {
             transform: scale(1.05);
             background: #d5eef7;
             transition: 1s;
             z-index: 1000;
         }
 
-        .card-body {
+        .card-body-index {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -268,7 +332,7 @@
             height: 350px;
         }
 
-        .card-title {
+        .card-title-index {
             font-weight: bold;
             text-align: center;
             font-size: 30px;

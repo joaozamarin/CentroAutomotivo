@@ -106,7 +106,7 @@ namespace CentroAutomotivo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataHora,Telefone,DescricaoProblema,Resposta,Reboque,VeiculoId,StatusOrdemServicoId")] Agendamento agendamento)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DataHora,Telefone,DescricaoProblema,Resposta,Reboque,VeiculoId,StatusOrdemServicoId,CEP,Rua,Numero,Bairro,Cidade,UF")] Agendamento agendamento)
         {
             if (id != agendamento.Id)
             {
