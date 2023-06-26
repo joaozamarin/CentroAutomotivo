@@ -79,67 +79,38 @@
 
             @if(Model.Reboque)
             {
+                <h4 class="mt-3">Endereço</h4>
                 <div class="row">
-                    <div class="form-group col-12">
-                        <div id="accordion" class="mt-2">
-                            <div class="card">
-                                <div class="card-header" id="endereco">
-                                    <div class="collapsed d-flex align-items-center justify-content-between" data-toggle="collapse"
-                                        data-target="#collapseEndereco" aria-expanded="false" aria-controls="collapseEndereco" style="cursor: pointer;">
-                                        <h5>
-                                            Endereço
-                                        </h5>
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                            class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd"
-                                                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div id="collapseEndereco" class="collapse" aria-labelledby="endereco" data-parent="#accordion">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="row">
-                                                    <div class="form-group col-3">
-                                                        <label asp-for="CEP" class="control-label"></label>
-                                                        <input asp-for="CEP" class="form-control" readonly />
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label asp-for="Rua" class="control-label"></label>
-                                                        <input asp-for="Rua" class="form-control" readonly />
-                                                    </div>
-                                                    <div class="form-group col-3">
-                                                        <label asp-for="Numero" class="control-label"></label>
-                                                        <input asp-for="Numero" class="form-control" readonly />
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-4">
-                                                        <label asp-for="Bairro" class="control-label"></label>
-                                                        <input asp-for="Bairro" class="form-control" readonly />
-                                                    </div>
-                                                    <div class="form-group col-3">
-                                                        <label asp-for="Cidade" class="control-label"></label>
-                                                        <input asp-for="Cidade" class="form-control" readonly />
-                                                    </div>
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="UF" class="control-label"></label>
-                                                        <input asp-for="UF" class="form-control" readonly />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group col-2">
+                        <label asp-for="CEP" class="control-label"></label>
+                        <input asp-for="CEP" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-5">
+                        <label asp-for="Rua" class="control-label"></label>
+                        <input asp-for="Rua" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-2">
+                        <label asp-for="Numero" class="control-label"></label>
+                        <input asp-for="Numero" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-4">
+                        <label asp-for="Bairro" class="control-label"></label>
+                        <input asp-for="Bairro" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-3">
+                        <label asp-for="Cidade" class="control-label"></label>
+                        <input asp-for="Cidade" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-2">
+                        <label asp-for="UF" class="control-label"></label>
+                        <input asp-for="UF" class="form-control" readonly />
                     </div>
                 </div>
             }
 
-            <div class="row">
+            <div class="row mt-3">
                 <div class="form-group col-12">
                     <div id="accordion">
                         <div class="card">
