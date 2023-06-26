@@ -211,6 +211,13 @@ namespace CentroAutomotivo.Data
                     Nome = "Vela de Ignição",
                     Quantidade = 15,
                     Preco = 100.00M
+                },
+                new Peca
+                {
+                    Id = 7,
+                    Nome = "Óleo de Motor",
+                    Quantidade = 15,
+                    Preco = 90.00M
                 }
             };
             builder.Entity<Peca>().HasData(pecas);
